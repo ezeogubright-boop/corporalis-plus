@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporalis - Progress Tracking</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#39E01E",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#121212",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "text-main-light": "#111111",
+                        "text-main-dark": "#EAEAEA",
+                        "text-muted-light": "#666666",
+                        "text-muted-dark": "#A0A0A0",
+                    },
+                    fontFamily: {
+                        display: ["Syne", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)",
+                        'grid-pattern-dark': "linear-gradient(to right, #2a2a2a 1px, transparent 1px), linear-gradient(to bottom, #2a2a2a 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'scale-in': 'scale-in 0.5s ease-out forwards',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-scale-in {
+            animation: scale-in 0.5s ease-out forwards;
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 2rem;
+        }
+        .sidebar-active {
+            background-color: rgba(57, 224, 30, 0.1);
+            border-left: 3px solid #39E01E;
+        }
+        /* Logout Modal Styles */
+        .logout-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .logout-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .logout-card {
+            background-color: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            max-width: 420px;
+            width: 90%;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform: translateY(50px);
+            opacity: 0;
+        }
+        .logout-modal.dark .logout-card {
+            background-color: #1E1E1E;
+            color: #EAEAEA;
+        }
+        .logout-modal.active .logout-card {
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .logout-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+        .logout-icon i {
+            color: white;
+            font-size: 2rem;
+        }
+        .logout-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #111111;
+        }
+        .logout-modal.dark .logout-title {
+            color: #EAEAEA;
+        }
+        .logout-message {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #666666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .logout-modal.dark .logout-message {
+            color: #A0A0A0;
+        }
+        .logout-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-direction: column-reverse;
+        }
+        .logout-btn-confirm, .logout-btn-cancel {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .logout-btn-confirm {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        .logout-btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        .logout-btn-confirm:active {
+            transform: translateY(0);
+        }
+        .logout-btn-cancel {
+            background-color: #f0f0f0;
+            color: #111111;
+        }
+        .logout-modal.dark .logout-btn-cancel {
+            background-color: #2a2a2a;
+            color: #EAEAEA;
+        }
+        .logout-btn-cancel:hover {
+            background-color: #e0e0e0;
+        }
+        .logout-modal.dark .logout-btn-cancel:hover {
+            background-color: #333333;
+        }
+        /* Mobile responsiveness for touch-friendly elements */
+        @media (max-width: 640px) {
+            button, a {
+                min-height: 44px;
+            }
+            input, textarea, select {
+                font-size: 16px;
+            }
+            .logout-card {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+            .logout-buttons {
+                gap: 0.75rem;
+            }
+            .logout-btn-confirm, .logout-btn-cancel {
+                padding: 0.65rem 1.25rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body antialiased transition-colors duration-300">
+    <!-- Grid Background -->
+    <div class="fixed inset-0 bg-grid-pattern dark:bg-grid-pattern-dark bg-[size:4rem_4rem] pointer-events-none opacity-40 z-0"></div>
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="hidden lg:flex lg:w-64 bg-surface-light dark:bg-surface-dark border-r border-gray-200 dark:border-gray-800 flex-col fixed h-screen z-40">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-800">
+                <a href="dashboard.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <i class="bx bxs-globe text-text-main-light dark:text-text-main-dark text-2xl"></i>
+                    <span class="font-display font-bold text-lg text-text-main-light dark:text-text-main-dark">Corporalis</span>
+                </a>
+            </div>
+
+            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-home text-2xl"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="my-programs.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-dumbbell text-2xl"></i>
+                    <span>My Programs</span>
+                </a>
+                <a href="progress.html" class="sidebar-active flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-medium transition-all">
+                    <i class="bx bx-bar-chart-alt-2 text-2xl"></i>
+                    <span>Progress</span>
+                </a>
+                <a href="bookings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-calendar text-2xl"></i>
+                    <span>Bookings</span>
+                </a>
+                <a href="goals.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-heart text-2xl"></i>
+                    <span>Goals</span>
+                </a>
+                <a href="messages.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-message-rounded text-2xl"></i>
+                    <span>Messages</span>
+                </a>
+                <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-cog text-2xl"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+                <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-red-500/10 hover:text-red-500 transition-all">
+                    <i class="bx bx-log-out text-2xl"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile Top Bar & Main Content -->
+        <div class="w-full lg:ml-64 flex flex-col min-h-screen">
+            <!-- Top Navigation -->
+            <nav class="relative z-30 bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 sticky top-0">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <button id="mobileMenuBtn" class="lg:hidden p-2 hover:bg-primary/10 rounded-lg transition-colors">
+                            <i class="bx bx-menu text-2xl text-text-main-light dark:text-text-main-dark"></i>
+                        </button>
+                        <h1 class="font-display font-bold text-2xl text-text-main-light dark:text-text-main-dark">Progress</h1>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button id="themeToggle" class="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark">
+                            <i class="bx bx-moon text-2xl"></i>
+                        </button>
+                        <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center cursor-pointer hover:bg-primary/30 transition-colors">
+                            <i class="bx bx-user text-primary text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Mobile Sidebar -->
+            <div id="mobileSidebar" class="hidden lg:hidden bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800">
+                <nav class="px-4 py-4 space-y-2">
+                    <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-home text-2xl"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="my-programs.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-dumbbell text-2xl"></i>
+                        <span>My Programs</span>
+                    </a>
+                    <a href="progress.html" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary font-medium">
+                        <i class="bx bx-bar-chart-alt-2 text-2xl"></i>
+                        <span>Progress</span>
+                    </a>
+                    <a href="bookings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-calendar text-2xl"></i>
+                        <span>Bookings</span>
+                    </a>
+                    <a href="goals.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-heart text-2xl"></i>
+                        <span>Goals</span>
+                    </a>
+                    <a href="fitness.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-home-alt text-2xl"></i>
+                        <span>Back to Home</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <main class="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+                <!-- Header -->
+                <section class="mb-8 animate-fade-in-up">
+                    <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                        Your Progress
+                    </h2>
+                    <p class="text-sm sm:text-base text-text-muted-light dark:text-text-muted-dark">
+                        Track your fitness journey and achievements
+                    </p>
+                </section>
+
+                <!-- Key Metrics -->
+                <section class="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium">Total Workouts</h3>
+                            <div class="bg-primary/20 p-2 rounded-lg">
+                                <i class="bx bx-dumbbell text-primary text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="font-display text-4xl font-bold text-text-main-light dark:text-text-main-dark">127</p>
+                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm mt-2">+5 this week</p>
+                    </div>
+
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-200">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium">Total Hours</h3>
+                            <div class="bg-blue-500/20 p-2 rounded-lg">
+                                <i class="bx bx-time text-blue-500 text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="font-display text-4xl font-bold text-text-main-light dark:text-text-main-dark">187</p>
+                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm mt-2">+8.5 this week</p>
+                    </div>
+
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-300">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium">Calories Burned</h3>
+                            <div class="bg-orange-500/20 p-2 rounded-lg">
+                                <i class="bx bx-zap text-orange-500 text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="font-display text-4xl font-bold text-text-main-light dark:text-text-main-dark">45.2K</p>
+                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm mt-2">+2.1K this week</p>
+                    </div>
+
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-400">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-text-muted-light dark:text-text-muted-dark text-sm font-medium">Weight Lost</h3>
+                            <div class="bg-green-500/20 p-2 rounded-lg">
+                                <i class="bx bx-trending-down text-green-500 text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="font-display text-4xl font-bold text-text-main-light dark:text-text-main-dark">6.5 kg</p>
+                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm mt-2">Target: 10 kg</p>
+                    </div>
+                </section>
+
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 mb-12">
+                    <!-- Workout History Chart -->
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 sm:p-6 shadow-lg animate-fade-in-up delay-100">
+                        <h3 class="font-display text-lg sm:text-xl font-bold text-text-main-light dark:text-text-main-dark mb-4">Weekly Workouts</h3>
+                        <div class="chart-container">
+                            <canvas id="workoutChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Calories Burned Chart -->
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 sm:p-6 shadow-lg animate-fade-in-up delay-200">
+                        <h3 class="font-display text-lg sm:text-xl font-bold text-text-main-light dark:text-text-main-dark mb-4">Weekly Calories</h3>
+                        <div class="chart-container">
+                            <canvas id="caloriesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weight Tracking -->
+                <section class="bg-surface-light dark:bg-surface-dark rounded-xl p-4 sm:p-6 shadow-lg animate-fade-in-up delay-300 mb-12">
+                    <h3 class="font-display text-lg sm:text-xl font-bold text-text-main-light dark:text-text-main-dark mb-6">Weight Tracking</h3>
+                    <div class="chart-container">
+                        <canvas id="weightChart"></canvas>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+                        <div class="text-center p-4 bg-background-light dark:bg-background-dark rounded-lg">
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm mb-2">Starting Weight</p>
+                            <p class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">84.5 kg</p>
+                        </div>
+                        <div class="text-center p-4 bg-background-light dark:bg-background-dark rounded-lg">
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm mb-2">Current Weight</p>
+                            <p class="font-display text-2xl font-bold text-primary">78 kg</p>
+                        </div>
+                        <div class="text-center p-4 bg-background-light dark:bg-background-dark rounded-lg">
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm mb-2">Goal Weight</p>
+                            <p class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">72 kg</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Personal Records -->
+                <section class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-400">
+                    <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-6">Personal Records</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 bg-background-light dark:bg-background-dark rounded-lg border-l-4 border-primary">
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Longest Streak</p>
+                            <p class="font-display text-3xl font-bold text-primary mt-2">12 days</p>
+                        </div>
+                        <div class="p-4 bg-background-light dark:bg-background-dark rounded-lg border-l-4 border-blue-500">
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Most Calories (1 Day)</p>
+                            <p class="font-display text-3xl font-bold text-blue-500 mt-2">520 kcal</p>
+                        </div>
+                        <div class="p-4 bg-background-light dark:bg-background-dark rounded-lg border-l-4 border-orange-500">
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Longest Workout</p>
+                            <p class="font-display text-3xl font-bold text-orange-500 mt-2">90 min</p>
+                        </div>
+                        <div class="p-4 bg-background-light dark:bg-background-dark rounded-lg border-l-4 border-green-500">
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Best Week</p>
+                            <p class="font-display text-3xl font-bold text-green-500 mt-2">32.5 hours</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-gray-200 dark:border-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-4">
+                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                    © 2025 Corporalis. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-6 text-center sm:text-left">
+                <a href="privacy-policy.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Privacy Policy
+                </a>
+                <a href="terms-of-service.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Terms of Service
+                </a>
+                <a href="contact.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Contact
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="logout-modal">
+        <div class="logout-card">
+            <div class="logout-icon">
+                <i class="bx bx-log-out"></i>
+            </div>
+            <h2 class="logout-title">Ready to go?</h2>
+            <p class="logout-message">You'll be logged out of your Corporalis account. You can log back in anytime.</p>
+            <div class="logout-buttons">
+                <button class="logout-btn-confirm" onclick="confirmLogout()">
+                    <i class="bx bx-check" style="margin-right: 0.5rem; vertical-align: middle;"></i>
+                    Yes, Logout
+                </button>
+                <button class="logout-btn-cancel" onclick="closeLogoutModal()">
+                    <i class="bx bx-x" style="margin-right: 0.5rem; vertical-align: middle;"></i>
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const themeToggle = document.getElementById('themeToggle');
+            let sidebarOpen = false;
+
+            // Theme toggle
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    document.documentElement.classList.toggle('dark');
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('bx-moon');
+                    icon.classList.toggle('bx-sun');
+                    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                });
+
+                // Load theme preference
+                if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                    themeToggle.querySelector('i').classList.remove('bx-moon');
+                    themeToggle.querySelector('i').classList.add('bx-sun');
+                }
+            }
+
+            // Mobile menu toggle
+            if (mobileMenuBtn && mobileSidebar) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    sidebarOpen = !sidebarOpen;
+                    if (sidebarOpen) {
+                        mobileSidebar.classList.remove('hidden');
+                    } else {
+                        mobileSidebar.classList.add('hidden');
+                    }
+                });
+
+                // Close menu when clicking a link
+                mobileSidebar.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        sidebarOpen = false;
+                        mobileSidebar.classList.add('hidden');
+                    });
+                });
+            }
+
+            // Initialize Charts
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            const chartTextColor = isDarkMode ? '#EAEAEA' : '#111111';
+            const chartGridColor = isDarkMode ? '#2a2a2a' : '#e5e7eb';
+
+            // Workout Chart
+            const workoutCtx = document.getElementById('workoutChart');
+            if (workoutCtx) {
+                new Chart(workoutCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Workouts',
+                            data: [2, 1, 2, 1, 2, 3, 1],
+                            backgroundColor: '#39E01E',
+                            borderRadius: 6,
+                            borderSkipped: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    color: chartTextColor
+                                },
+                                grid: {
+                                    color: chartGridColor
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    color: chartTextColor
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Calories Chart
+            const caloriesCtx = document.getElementById('caloriesChart');
+            if (caloriesCtx) {
+                new Chart(caloriesCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Calories Burned',
+                            data: [380, 290, 420, 310, 450, 520, 350],
+                            borderColor: '#FFA500',
+                            backgroundColor: 'rgba(255, 165, 0, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#FFA500',
+                            pointRadius: 5,
+                            pointHoverRadius: 7
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    color: chartTextColor
+                                },
+                                grid: {
+                                    color: chartGridColor
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    color: chartTextColor
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Weight Chart
+            const weightCtx = document.getElementById('weightChart');
+            if (weightCtx) {
+                new Chart(weightCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+                        datasets: [{
+                            label: 'Weight (kg)',
+                            data: [84.5, 83.8, 83.2, 82.1, 81.5, 80.2, 79.1, 78],
+                            borderColor: '#39E01E',
+                            backgroundColor: 'rgba(57, 224, 30, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#39E01E',
+                            pointRadius: 6,
+                            pointHoverRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                min: 75,
+                                max: 85,
+                                ticks: {
+                                    color: chartTextColor
+                                },
+                                grid: {
+                                    color: chartGridColor
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    color: chartTextColor
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+        function logout() {
+            openLogoutModal();
+        }
+
+        function openLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            const isDark = document.documentElement.classList.contains('dark');
+            modal.classList.toggle('dark', isDark);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function confirmLogout() {
+            localStorage.removeItem('userLoggedIn');
+            window.location.href = 'fitness.html';
+        }
+
+        document.getElementById('logoutModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLogoutModal();
+            }
+        });
+    </script>
+</body>
+</html>

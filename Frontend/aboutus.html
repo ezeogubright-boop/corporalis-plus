@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporalis - About Us</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#39E01E",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#121212",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "text-main-light": "#111111",
+                        "text-main-dark": "#EAEAEA",
+                        "text-muted-light": "#666666",
+                        "text-muted-dark": "#A0A0A0",
+                    },
+                    fontFamily: {
+                        display: ["Syne", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)",
+                        'grid-pattern-dark': "linear-gradient(to right, #2a2a2a 1px, transparent 1px), linear-gradient(to bottom, #2a2a2a 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'slide-in': 'slide-in 0.8s ease-out forwards',
+                        'scale-in': 'scale-in 0.5s ease-out forwards',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-scale-in {
+            animation: scale-in 0.5s ease-out forwards;
+        }
+        .delay-100 {
+            animation-delay: 100ms;
+        }
+        .delay-200 {
+            animation-delay: 200ms;
+        }
+        .delay-300 {
+            animation-delay: 300ms;
+        }
+        .delay-400 {
+            animation-delay: 400ms;
+        }
+        .value-card {
+            transition: all 0.3s ease;
+        }
+        .value-card:hover {
+            transform: translateY(-8px);
+        }
+        .timeline-item {
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover {
+            transform: translateX(5px);
+        }
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body antialiased transition-colors duration-300">
+    <!-- Grid Background -->
+    <div class="fixed inset-0 bg-grid-pattern dark:bg-grid-pattern-dark bg-[size:4rem_4rem] pointer-events-none opacity-40 z-0"></div>
+    <div class="fixed top-20 left-[15%] w-10 h-10 bg-primary/20 blur-sm dark:bg-primary/10 z-0"></div>
+    <div class="fixed top-40 right-[35%] w-8 h-8 bg-primary/15 blur-sm dark:bg-primary/10 z-0"></div>
+    <div class="fixed bottom-32 left-[40%] w-16 h-16 bg-primary/10 blur-xl rounded-full z-0"></div>
+
+    <!-- Navigation -->
+    <nav class="relative z-50 w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex justify-between items-center">
+        <a href="fitness.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <i class="bx bxs-globe text-text-main-light dark:text-text-main-dark text-2xl sm:text-3xl"></i>
+            <span class="font-display font-bold text-lg sm:text-xl text-text-main-light dark:text-text-main-dark">Corporalis</span>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+            <a class="group relative text-text-main-light dark:text-text-main-dark hover:text-primary transition-colors" href="fitness.html" title="Home">
+                <i class="bx bx-home text-2xl"></i>
+                <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 text-white dark:text-black bg-text-main-light dark:bg-text-main-dark rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 pointer-events-none">Home</span>
+            </a>
+            <a class="group relative text-text-main-light dark:text-text-main-dark hover:text-primary transition-colors" href="coach.html" title="Coach">
+                <i class="bx bx-user text-2xl"></i>
+                <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 text-white dark:text-black bg-text-main-light dark:bg-text-main-dark rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 pointer-events-none">Coach</span>
+            </a>
+            <a class="group relative text-text-main-light dark:text-text-main-dark hover:text-primary transition-colors" href="programs.html" title="Programs">
+                <i class="bx bx-dumbbell text-2xl"></i>
+                <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 text-white dark:text-black bg-text-main-light dark:bg-text-main-dark rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 pointer-events-none">Programs</span>
+            </a>
+            <a class="group relative text-text-main-light dark:text-text-main-dark hover:text-primary transition-colors" href="pricing.html" title="Pricing">
+                <i class="bx bx-money text-2xl"></i>
+                <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 text-white dark:text-black bg-text-main-light dark:bg-text-main-dark rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 pointer-events-none">Pricing</span>
+            </a>
+            <a class="group relative text-primary transition-colors" href="aboutus.html" title="About us">
+                <i class="bx bx-info-circle text-2xl"></i>
+                <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 text-white dark:text-black bg-primary rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 pointer-events-none">About us</span>
+            </a>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-3">
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark" title="Toggle dark mode">
+                <i class="bx bx-moon text-2xl"></i>
+            </button>
+            <a href="login.html" class="bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base rounded-full transition-transform active:scale-95 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/40">
+                Log in
+            </a>
+            <button id="mobileMenuBtn" class="ml-4 md:hidden text-text-main-light dark:text-text-main-dark">
+                <i class="bx bx-menu text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobileMenu" class="hidden fixed top-20 left-0 right-0 bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 shadow-lg z-40 md:hidden">
+        <div class="flex flex-col p-4 space-y-3">
+            <a href="fitness.html" class="flex items-center gap-3 px-4 py-3 text-text-main-light dark:text-text-main-dark hover:text-primary hover:bg-primary/10 rounded transition-colors">
+                <i class="bx bx-home text-2xl"></i>
+                <span class="font-medium">Home</span>
+            </a>
+            <a href="coach.html" class="flex items-center gap-3 px-4 py-3 text-text-main-light dark:text-text-main-dark hover:text-primary hover:bg-primary/10 rounded transition-colors">
+                <i class="bx bx-user text-2xl"></i>
+                <span class="font-medium">Coach</span>
+            </a>
+            <a href="programs.html" class="flex items-center gap-3 px-4 py-3 text-text-main-light dark:text-text-main-dark hover:text-primary hover:bg-primary/10 rounded transition-colors">
+                <i class="bx bx-dumbbell text-2xl"></i>
+                <span class="font-medium">Programs</span>
+            </a>
+            <a href="pricing.html" class="flex items-center gap-3 px-4 py-3 text-text-main-light dark:text-text-main-dark hover:text-primary hover:bg-primary/10 rounded transition-colors">
+                <i class="bx bx-money text-2xl"></i>
+                <span class="font-medium">Pricing</span>
+            </a>
+            <a href="aboutus.html" class="flex items-center gap-3 px-4 py-3 text-primary bg-primary/10 rounded transition-colors font-medium">
+                <i class="bx bx-info-circle text-2xl"></i>
+                <span>About us</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
+        <!-- Hero Section -->
+        <section class="mb-16 sm:mb-24 text-center">
+            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-text-main-light dark:text-text-main-dark mb-4 sm:mb-6 animate-fade-in-up">
+                About <span class="text-primary">Corporalis</span>
+            </h1>
+            <p class="text-text-muted-light dark:text-text-muted-dark text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-100">
+                We're on a mission to transform lives through fitness, science-backed training, and a supportive community that believes in your potential.
+            </p>
+        </section>
+
+        <!-- Mission & Vision Section -->
+        <section class="mb-20 sm:mb-32 grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
+            <!-- Mission -->
+            <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-8 sm:p-10 shadow-lg animate-fade-in-up delay-100">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="flex items-center justify-center h-14 w-14 rounded-lg bg-primary/20">
+                        <i class="bx bx-target-lock text-primary text-3xl"></i>
+                    </div>
+                    <h2 class="font-display text-2xl sm:text-3xl font-bold text-text-main-light dark:text-text-main-dark">
+                        Our Mission
+                    </h2>
+                </div>
+                <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">
+                    To empower individuals worldwide to achieve their fitness goals through personalized training programs, expert coaching, and a thriving community. We believe fitness is for everyone, and we're committed to making it accessible, enjoyable, and sustainable.
+                </p>
+            </div>
+
+            <!-- Vision -->
+            <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-8 sm:p-10 shadow-lg animate-fade-in-up delay-200">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="flex items-center justify-center h-14 w-14 rounded-lg bg-primary/20">
+                        <i class="bx bx-bulb text-primary text-3xl"></i>
+                    </div>
+                    <h2 class="font-display text-2xl sm:text-3xl font-bold text-text-main-light dark:text-text-main-dark">
+                        Our Vision
+                    </h2>
+                </div>
+                <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">
+                    To become the world's most trusted fitness platform, known for transforming lives, inspiring confidence, and building a global community where health and wellness are accessible to everyone, regardless of their starting point.
+                </p>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="mb-20 sm:mb-32">
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-text-main-light dark:text-text-main-dark mb-12 text-center animate-fade-in-up">
+                By The <span class="text-primary">Numbers</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <!-- Stat 1 -->
+                <div class="stat-card bg-surface-light dark:bg-surface-dark rounded-xl p-8 text-center shadow-lg animate-fade-in-up delay-100">
+                    <div class="font-display text-4xl sm:text-5xl font-bold text-primary mb-3">
+                        50K+
+                    </div>
+                    <p class="text-text-main-light dark:text-text-main-dark font-semibold mb-2">
+                        Active Members
+                    </p>
+                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                        Training and transforming their bodies
+                    </p>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="stat-card bg-surface-light dark:bg-surface-dark rounded-xl p-8 text-center shadow-lg animate-fade-in-up delay-200">
+                    <div class="font-display text-4xl sm:text-5xl font-bold text-primary mb-3">
+                        100+
+                    </div>
+                    <p class="text-text-main-light dark:text-text-main-dark font-semibold mb-2">
+                        Expert Coaches
+                    </p>
+                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                        Certified and dedicated to your success
+                    </p>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="stat-card bg-surface-light dark:bg-surface-dark rounded-xl p-8 text-center shadow-lg animate-fade-in-up delay-300">
+                    <div class="font-display text-4xl sm:text-5xl font-bold text-primary mb-3">
+                        500+
+                    </div>
+                    <p class="text-text-main-light dark:text-text-main-dark font-semibold mb-2">
+                        Training Programs
+                    </p>
+                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                        For all fitness levels and goals
+                    </p>
+                </div>
+
+                <!-- Stat 4 -->
+                <div class="stat-card bg-surface-light dark:bg-surface-dark rounded-xl p-8 text-center shadow-lg animate-fade-in-up delay-400">
+                    <div class="font-display text-4xl sm:text-5xl font-bold text-primary mb-3">
+                        8+
+                    </div>
+                    <p class="text-text-main-light dark:text-text-main-dark font-semibold mb-2">
+                        Years of Excellence
+                    </p>
+                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                        Helping people reach their goals
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Values Section -->
+        <section class="mb-20 sm:mb-32">
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-text-main-light dark:text-text-main-dark mb-12 text-center animate-fade-in-up">
+                Our Core <span class="text-primary">Values</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Value 1 -->
+                <div class="value-card bg-surface-light dark:bg-surface-dark rounded-xl p-8 shadow-lg animate-fade-in-up delay-100">
+                    <div class="flex items-start gap-4 mb-4">
+                        <i class="bx bx-dumbbell text-4xl text-primary"></i>
+                        <h3 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">
+                            Excellence
+                        </h3>
+                    </div>
+                    <p class="text-text-muted-light dark:text-text-muted-dark">
+                        We strive for excellence in everything we do - from program design to customer service. Your success is our standard.
+                    </p>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="value-card bg-surface-light dark:bg-surface-dark rounded-xl p-8 shadow-lg animate-fade-in-up delay-200">
+                    <div class="flex items-start gap-4 mb-4">
+                        <i class="bx bx-handshake text-4xl text-primary"></i>
+                        <h3 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">
+                            Community
+                        </h3>
+                    </div>
+                    <p class="text-text-muted-light dark:text-text-muted-dark">
+                        We believe in the power of community. Together, we inspire, support, and celebrate each other's achievements.
+                    </p>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="value-card bg-surface-light dark:bg-surface-dark rounded-xl p-8 shadow-lg animate-fade-in-up delay-300">
+                    <div class="flex items-start gap-4 mb-4">
+                        <i class="bx bx-test-tube text-4xl text-primary"></i>
+                        <h3 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">
+                            Science-Based
+                        </h3>
+                    </div>
+                    <p class="text-text-muted-light dark:text-text-muted-dark">
+                        Every program is backed by science and proven methodologies. We trust data, not trends.
+                    </p>
+                </div>
+
+                <!-- Value 4 -->
+                <div class="value-card bg-surface-light dark:bg-surface-dark rounded-xl p-8 shadow-lg animate-fade-in-up delay-400">
+                    <div class="flex items-start gap-4 mb-4">
+                        <i class="bx bx-leaf text-4xl text-primary"></i>
+                        <h3 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">
+                            Sustainability
+                        </h3>
+                    </div>
+                    <p class="text-text-muted-light dark:text-text-muted-dark">
+                        We focus on long-term transformation, not quick fixes. Your health is a journey, and we're here for the long run.
+                    </p>
+                </div>
+
+                <!-- Value 5 -->
+                <div class="value-card bg-surface-light dark:bg-surface-dark rounded-xl p-8 shadow-lg animate-fade-in-up delay-100">
+                    <div class="flex items-start gap-4 mb-4">
+                        <i class="bx bx-accessibility text-4xl text-primary"></i>
+                        <h3 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">
+                            Inclusivity
+                        </h3>
+                    </div>
+                    <p class="text-text-muted-light dark:text-text-muted-dark">
+                        Fitness is for everyone. We're committed to creating an inclusive environment where all bodies and abilities are welcome.
+                    </p>
+                </div>
+
+                <!-- Value 6 -->
+                <div class="value-card bg-surface-light dark:bg-surface-dark rounded-xl p-8 shadow-lg animate-fade-in-up delay-200">
+                    <div class="flex items-start gap-4 mb-4">
+                        <i class="bx bx-target-lock text-4xl text-primary"></i>
+                        <h3 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">
+                            Results-Driven
+                        </h3>
+                    </div>
+                    <p class="text-text-muted-light dark:text-text-muted-dark">
+                        We measure success by the results you achieve. Your goals are our goals, and we're committed to helping you reach them.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="mb-20 sm:mb-32">
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-text-main-light dark:text-text-main-dark mb-12 text-center animate-fade-in-up">
+                Our <span class="text-primary">Journey</span>
+            </h2>
+            <div class="max-w-3xl mx-auto">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item flex gap-6 mb-12 animate-fade-in-up delay-100">
+                    <div class="flex-shrink-0 relative">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-primary text-white dark:text-black font-bold">
+                            2016
+                        </div>
+                    </div>
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-lg p-6 flex-grow shadow-lg">
+                        <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                            Corporalis Founded
+                        </h3>
+                        <p class="text-text-muted-light dark:text-text-muted-dark">
+                            Started with a vision to make fitness accessible and effective for everyone. Launched with 5 foundational programs.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item flex gap-6 mb-12 animate-fade-in-up delay-200">
+                    <div class="flex-shrink-0 relative">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-primary text-white dark:text-black font-bold">
+                            2018
+                        </div>
+                    </div>
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-lg p-6 flex-grow shadow-lg">
+                        <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                            Reached 10K Members
+                        </h3>
+                        <p class="text-text-muted-light dark:text-text-muted-dark">
+                            Expanded our team to 20 coaches and launched our mobile app for better accessibility.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item flex gap-6 mb-12 animate-fade-in-up delay-300">
+                    <div class="flex-shrink-0 relative">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-primary text-white dark:text-black font-bold">
+                            2020
+                        </div>
+                    </div>
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-lg p-6 flex-grow shadow-lg">
+                        <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                            Digital Transformation
+                        </h3>
+                        <p class="text-text-muted-light dark:text-text-muted-dark">
+                            Pivoted to online training during global pandemic. Expanded to 200+ programs and built a thriving virtual community.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 4 -->
+                <div class="timeline-item flex gap-6 mb-12 animate-fade-in-up delay-400">
+                    <div class="flex-shrink-0 relative">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-primary text-white dark:text-black font-bold">
+                            2022
+                        </div>
+                    </div>
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-lg p-6 flex-grow shadow-lg">
+                        <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                            Reached 30K Members
+                        </h3>
+                        <p class="text-text-muted-light dark:text-text-muted-dark">
+                            Launched advanced analytics and personalized coaching. Received "Best Fitness Platform" award.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 5 -->
+                <div class="timeline-item flex gap-6 animate-fade-in-up delay-100">
+                    <div class="flex-shrink-0 relative">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-full bg-primary text-white dark:text-black font-bold">
+                            2024
+                        </div>
+                    </div>
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-lg p-6 flex-grow shadow-lg">
+                        <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                            Milestone: 50K+ Members & Counting
+                        </h3>
+                        <p class="text-text-muted-light dark:text-text-muted-dark">
+                            Celebrating success with 500+ programs, 100+ expert coaches, and a global community of fitness enthusiasts.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section class="mb-20 sm:mb-32">
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-text-main-light dark:text-text-main-dark mb-12 text-center animate-fade-in-up">
+                Why Choose <span class="text-primary">Corporalis</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Reason 1 -->
+                <div class="flex gap-6 animate-fade-in-up delay-100">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-primary/20">
+                            <i class="bx bx-check-circle text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                            Science-Backed Programs
+                        </h3>
+                        <p class="text-text-muted-light dark:text-text-muted-dark">
+                            Every program is designed by certified experts using evidence-based methodologies proven to work.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Reason 2 -->
+                <div class="flex gap-6 animate-fade-in-up delay-200">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-primary/20">
+                            <i class="bx bx-check-circle text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                            Personalized Approach
+                        </h3>
+                        <p class="text-text-muted-light dark:text-text-muted-dark">
+                            Your fitness journey is unique. We customize programs to fit your goals, abilities, and lifestyle.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Reason 3 -->
+                <div class="flex gap-6 animate-fade-in-up delay-300">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-primary/20">
+                            <i class="bx bx-check-circle text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                            Expert Guidance
+                        </h3>
+                        <p class="text-text-muted-light dark:text-text-muted-dark">
+                            Access to certified coaches who are invested in your success and available to support your journey.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Reason 4 -->
+                <div class="flex gap-6 animate-fade-in-up delay-400">
+                    <div class="flex-shrink-0">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-primary/20">
+                            <i class="bx bx-check-circle text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                            Supportive Community
+                        </h3>
+                        <p class="text-text-muted-light dark:text-text-muted-dark">
+                            Join thousands of members who inspire, support, and celebrate each other's fitness journey.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="mb-16 sm:mb-24 bg-gradient-to-r from-primary/20 to-primary/10 dark:from-primary/10 dark:to-primary/5 rounded-2xl p-8 sm:p-12 text-center">
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-text-main-light dark:text-text-main-dark mb-4 animate-fade-in-up">
+                Join Our <span class="text-primary">Community</span>
+            </h2>
+            <p class="text-text-muted-light dark:text-text-muted-dark text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-8 animate-fade-in-up delay-100">
+                Be part of a global movement dedicated to health, wellness, and personal transformation. Your journey starts today.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
+                <button class="w-full sm:w-auto bg-primary hover:bg-opacity-90 text-white dark:text-black font-bold py-3 sm:py-4 px-8 sm:px-10 rounded-full transition-transform active:scale-95 shadow-lg shadow-primary/30">
+                    Start Your Free Trial
+                </button>
+                <a href="consultation.html" class="w-full sm:w-auto bg-transparent border-2 border-primary text-primary hover:bg-primary/10 font-bold py-3 sm:py-4 px-8 sm:px-10 rounded-full transition-all text-center block">
+                    Schedule Consultation
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-gray-200 dark:border-gray-800 mt-20 sm:mt-32 py-8 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
+                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                    © 2025 Corporalis. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Facebook">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Twitter">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Instagram">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="YouTube">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="LinkedIn">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-6 text-center sm:text-left">
+                <a href="privacy-policy.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Privacy Policy
+                </a>
+                <a href="terms-of-service.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Terms of Service
+                </a>
+                <a href="contact.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Contact
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const themeToggle = document.getElementById('themeToggle');
+            let mobileMenuOpen = false;
+
+            // Theme toggle
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    document.documentElement.classList.toggle('dark');
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('bx-moon');
+                    icon.classList.toggle('bx-sun');
+                    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                });
+
+                // Load theme preference
+                if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                    themeToggle.querySelector('i').classList.remove('bx-moon');
+                    themeToggle.querySelector('i').classList.add('bx-sun');
+                }
+            }
+
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    mobileMenuOpen = !mobileMenuOpen;
+                    
+                    if (mobileMenuOpen) {
+                        mobileMenu.classList.remove('hidden');
+                        mobileMenu.classList.add('animate-fade-in-up');
+                    } else {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('animate-fade-in-up');
+                    }
+                });
+
+                // Close menu when a link is clicked
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenuOpen = false;
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('animate-fade-in-up');
+                    });
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                        if (mobileMenuOpen) {
+                            mobileMenuOpen = false;
+                            mobileMenu.classList.add('hidden');
+                            mobileMenu.classList.remove('animate-fade-in-up');
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

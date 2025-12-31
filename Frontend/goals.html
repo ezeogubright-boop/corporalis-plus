@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporalis - Goals</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#39E01E",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#121212",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "text-main-light": "#111111",
+                        "text-main-dark": "#EAEAEA",
+                        "text-muted-light": "#666666",
+                        "text-muted-dark": "#A0A0A0",
+                    },
+                    fontFamily: {
+                        display: ["Syne", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)",
+                        'grid-pattern-dark': "linear-gradient(to right, #2a2a2a 1px, transparent 1px), linear-gradient(to bottom, #2a2a2a 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'scale-in': 'scale-in 0.5s ease-out forwards',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-scale-in {
+            animation: scale-in 0.5s ease-out forwards;
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .goal-card {
+            transition: all 0.3s ease;
+        }
+        .goal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(57, 224, 30, 0.15);
+        }
+        .sidebar-active {
+            background-color: rgba(57, 224, 30, 0.1);
+            border-left: 3px solid #39E01E;
+        }
+        /* Logout Modal Styles */
+        .logout-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .logout-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .logout-card {
+            background-color: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            max-width: 420px;
+            width: 90%;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform: translateY(50px);
+            opacity: 0;
+        }
+        .logout-modal.dark .logout-card {
+            background-color: #1E1E1E;
+            color: #EAEAEA;
+        }
+        .logout-modal.active .logout-card {
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .logout-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+        .logout-icon i {
+            color: white;
+            font-size: 2rem;
+        }
+        .logout-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #111111;
+        }
+        .logout-modal.dark .logout-title {
+            color: #EAEAEA;
+        }
+        .logout-message {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #666666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .logout-modal.dark .logout-message {
+            color: #A0A0A0;
+        }
+        .logout-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-direction: column-reverse;
+        }
+        .logout-btn-confirm, .logout-btn-cancel {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .logout-btn-confirm {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        .logout-btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        .logout-btn-confirm:active {
+            transform: translateY(0);
+        }
+        .logout-btn-cancel {
+            background-color: #f0f0f0;
+            color: #111111;
+        }
+        .logout-modal.dark .logout-btn-cancel {
+            background-color: #2a2a2a;
+            color: #EAEAEA;
+        }
+        .logout-btn-cancel:hover {
+            background-color: #e0e0e0;
+        }
+        .logout-modal.dark .logout-btn-cancel:hover {
+            background-color: #333333;
+        }
+        /* Mobile responsiveness for touch-friendly elements */
+        @media (max-width: 640px) {
+            button, a {
+                min-height: 44px;
+            }
+            input, textarea, select {
+                font-size: 16px;
+            }
+            .logout-card {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+            .logout-buttons {
+                gap: 0.75rem;
+            }
+            .logout-btn-confirm, .logout-btn-cancel {
+                padding: 0.65rem 1.25rem;
+                font-size: 0.9rem;
+            }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 50;
+        }
+        .modal.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body antialiased transition-colors duration-300">
+    <!-- Grid Background -->
+    <div class="fixed inset-0 bg-grid-pattern dark:bg-grid-pattern-dark bg-[size:4rem_4rem] pointer-events-none opacity-40 z-0"></div>
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="hidden lg:flex lg:w-64 bg-surface-light dark:bg-surface-dark border-r border-gray-200 dark:border-gray-800 flex-col fixed h-screen z-40">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-800">
+                <a href="dashboard.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <i class="bx bxs-globe text-text-main-light dark:text-text-main-dark text-2xl"></i>
+                    <span class="font-display font-bold text-lg text-text-main-light dark:text-text-main-dark">Corporalis</span>
+                </a>
+            </div>
+
+            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-home text-2xl"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="my-programs.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-dumbbell text-2xl"></i>
+                    <span>My Programs</span>
+                </a>
+                <a href="progress.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-bar-chart-alt-2 text-2xl"></i>
+                    <span>Progress</span>
+                </a>
+                <a href="bookings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-calendar text-2xl"></i>
+                    <span>Bookings</span>
+                </a>
+                <a href="goals.html" class="sidebar-active flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-medium transition-all">
+                    <i class="bx bx-heart text-2xl"></i>
+                    <span>Goals</span>
+                </a>
+                <a href="messages.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-message-rounded text-2xl"></i>
+                    <span>Messages</span>
+                </a>
+                <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-cog text-2xl"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+                <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-red-500/10 hover:text-red-500 transition-all">
+                    <i class="bx bx-log-out text-2xl"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile Top Bar & Main Content -->
+        <div class="w-full lg:ml-64 flex flex-col min-h-screen">
+            <!-- Top Navigation -->
+            <nav class="relative z-30 bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 sticky top-0">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <button id="mobileMenuBtn" class="lg:hidden p-2 hover:bg-primary/10 rounded-lg transition-colors">
+                            <i class="bx bx-menu text-2xl text-text-main-light dark:text-text-main-dark"></i>
+                        </button>
+                        <h1 class="font-display font-bold text-2xl text-text-main-light dark:text-text-main-dark">Goals</h1>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button id="themeToggle" class="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark">
+                            <i class="bx bx-moon text-2xl"></i>
+                        </button>
+                        <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center cursor-pointer hover:bg-primary/30 transition-colors">
+                            <i class="bx bx-user text-primary text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Mobile Sidebar -->
+            <div id="mobileSidebar" class="hidden lg:hidden bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800">
+                <nav class="px-4 py-4 space-y-2">
+                    <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-home text-2xl"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="my-programs.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-dumbbell text-2xl"></i>
+                        <span>My Programs</span>
+                    </a>
+                    <a href="progress.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-bar-chart-alt-2 text-2xl"></i>
+                        <span>Progress</span>
+                    </a>
+                    <a href="bookings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-calendar text-2xl"></i>
+                        <span>Bookings</span>
+                    </a>
+                    <a href="goals.html" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary font-medium">
+                        <i class="bx bx-heart text-2xl"></i>
+                        <span>Goals</span>
+                    </a>
+                    <a href="fitness.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-home-alt text-2xl"></i>
+                        <span>Back to Home</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <main class="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+                <!-- Header -->
+                <section class="mb-8 animate-fade-in-up">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                        <div>
+                            <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                                Your Goals
+                            </h2>
+                            <p class="text-sm sm:text-base text-text-muted-light dark:text-text-muted-dark">
+                                Set and track your fitness objectives
+                            </p>
+                        </div>
+                        <button onclick="openGoalModal()" class="flex items-center justify-center gap-2 bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all text-sm sm:text-base whitespace-nowrap">
+                            <i class="bx bx-plus text-lg sm:text-xl"></i>
+                            <span>Set New Goal</span>
+                        </button>
+                    </div>
+
+                    <!-- Filter Tabs -->
+                    <div class="flex gap-3 flex-wrap">
+                        <button class="px-4 py-2 rounded-lg bg-primary text-white dark:text-black font-medium transition-all">All (5)</button>
+                        <button class="px-4 py-2 rounded-lg bg-surface-light dark:bg-surface-dark text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">Active (3)</button>
+                        <button class="px-4 py-2 rounded-lg bg-surface-light dark:bg-surface-dark text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">Achieved (2)</button>
+                    </div>
+                </section>
+
+                <!-- Active Goals -->
+                <section class="mb-12">
+                    <h3 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-6">Active Goals</h3>
+                    <div class="space-y-4">
+                        <!-- Goal 1: Weight Loss -->
+                        <div class="goal-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-100">
+                            <div class="flex items-start justify-between mb-4">
+                                <div>
+                                    <h4 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-1">Lose Weight</h4>
+                                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Target: 72 kg • Deadline: Mar 30, 2025</p>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="p-2 hover:bg-orange-500/20 rounded-lg transition-colors text-orange-500">
+                                        <i class="bx bx-edit text-xl"></i>
+                                    </button>
+                                    <button class="p-2 hover:bg-red-500/20 rounded-lg transition-colors text-red-500">
+                                        <i class="bx bx-trash text-xl"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-text-muted-light dark:text-text-muted-dark text-sm">Progress</span>
+                                    <span class="text-primary font-semibold">65%</span>
+                                </div>
+                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary" style="width: 65%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-3 mb-4">
+                                <div class="text-center p-3 bg-background-light dark:bg-background-dark rounded-lg">
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Current</p>
+                                    <p class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">78 kg</p>
+                                </div>
+                                <div class="text-center p-3 bg-background-light dark:bg-background-dark rounded-lg">
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Progress</p>
+                                    <p class="font-display text-2xl font-bold text-primary">6.5 kg</p>
+                                </div>
+                                <div class="text-center p-3 bg-background-light dark:bg-background-dark rounded-lg">
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Remaining</p>
+                                    <p class="font-display text-2xl font-bold text-orange-500">6 kg</p>
+                                </div>
+                            </div>
+
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Created Dec 26, 2024 • 3 months remaining</p>
+                        </div>
+
+                        <!-- Goal 2: Build Muscle -->
+                        <div class="goal-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-200">
+                            <div class="flex items-start justify-between mb-4">
+                                <div>
+                                    <h4 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-1">Build Muscle Mass</h4>
+                                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Target: 90 kg (Muscle) • Deadline: Jun 30, 2025</p>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="p-2 hover:bg-orange-500/20 rounded-lg transition-colors text-orange-500">
+                                        <i class="bx bx-edit text-xl"></i>
+                                    </button>
+                                    <button class="p-2 hover:bg-red-500/20 rounded-lg transition-colors text-red-500">
+                                        <i class="bx bx-trash text-xl"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-text-muted-light dark:text-text-muted-dark text-sm">Progress</span>
+                                    <span class="text-primary font-semibold">40%</span>
+                                </div>
+                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary" style="width: 40%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-3 mb-4">
+                                <div class="text-center p-3 bg-background-light dark:bg-background-dark rounded-lg">
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Current</p>
+                                    <p class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">78 kg</p>
+                                </div>
+                                <div class="text-center p-3 bg-background-light dark:bg-background-dark rounded-lg">
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Progress</p>
+                                    <p class="font-display text-2xl font-bold text-primary">+4.8 kg</p>
+                                </div>
+                                <div class="text-center p-3 bg-background-light dark:bg-background-dark rounded-lg">
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Remaining</p>
+                                    <p class="font-display text-2xl font-bold text-orange-500">+7.2 kg</p>
+                                </div>
+                            </div>
+
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Created Nov 15, 2024 • 6 months remaining</p>
+                        </div>
+
+                        <!-- Goal 3: Improve Endurance -->
+                        <div class="goal-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-300">
+                            <div class="flex items-start justify-between mb-4">
+                                <div>
+                                    <h4 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-1">Improve Endurance</h4>
+                                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Target: Run 10 km • Deadline: Feb 28, 2025</p>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="p-2 hover:bg-orange-500/20 rounded-lg transition-colors text-orange-500">
+                                        <i class="bx bx-edit text-xl"></i>
+                                    </button>
+                                    <button class="p-2 hover:bg-red-500/20 rounded-lg transition-colors text-red-500">
+                                        <i class="bx bx-trash text-xl"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-text-muted-light dark:text-text-muted-dark text-sm">Progress</span>
+                                    <span class="text-primary font-semibold">75%</span>
+                                </div>
+                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary" style="width: 75%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-3 mb-4">
+                                <div class="text-center p-3 bg-background-light dark:bg-background-dark rounded-lg">
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Current</p>
+                                    <p class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">7.5 km</p>
+                                </div>
+                                <div class="text-center p-3 bg-background-light dark:bg-background-dark rounded-lg">
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Progress</p>
+                                    <p class="font-display text-2xl font-bold text-primary">+7.5 km</p>
+                                </div>
+                                <div class="text-center p-3 bg-background-light dark:bg-background-dark rounded-lg">
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">Remaining</p>
+                                    <p class="font-display text-2xl font-bold text-orange-500">+2.5 km</p>
+                                </div>
+                            </div>
+
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Created Oct 10, 2024 • 2 months remaining</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Achieved Goals -->
+                <section>
+                    <h3 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-6">Achieved Goals</h3>
+                    <div class="space-y-4">
+                        <!-- Achieved Goal 1 -->
+                        <div class="goal-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-300 border-l-4 border-green-500">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-start gap-3 flex-1">
+                                    <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                        <i class="bx bx-check text-green-500 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-1">Complete 100 Workouts</h4>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Achieved on Dec 10, 2024</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Started Aug 20, 2024 • Completed in 112 days</p>
+                        </div>
+
+                        <!-- Achieved Goal 2 -->
+                        <div class="goal-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-400 border-l-4 border-green-500">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-start gap-3 flex-1">
+                                    <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                        <i class="bx bx-check text-green-500 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-1">Maintain 7-Day Streak</h4>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Achieved on Dec 15, 2024</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Started Dec 9, 2024 • Completed in 7 days</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-gray-200 dark:border-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-4">
+                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                    © 2025 Corporalis. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-6 text-center sm:text-left">
+                <a href="privacy-policy.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Privacy Policy
+                </a>
+                <a href="terms-of-service.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Terms of Service
+                </a>
+                <a href="contact.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Contact
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal: Add/Edit Goal -->
+    <div id="goalModal" class="modal">
+        <div class="flex items-center justify-center p-4">
+            <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-2xl max-w-md w-full p-6 animate-scale-in">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark">Set New Goal</h3>
+                    <button onclick="closeGoalModal()" class="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <i class="bx bx-x text-2xl text-text-main-light dark:text-text-main-dark"></i>
+                    </button>
+                </div>
+
+                <form onsubmit="handleGoalSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Goal Title</label>
+                        <input type="text" required placeholder="e.g., Run a 5K" class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                    </div>
+
+                    <div>
+                        <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Description</label>
+                        <textarea required placeholder="Describe your goal..." rows="3" class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Target Value</label>
+                        <input type="text" required placeholder="e.g., 5 km, 80 kg" class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                    </div>
+
+                    <div>
+                        <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Deadline</label>
+                        <input type="date" required class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                    </div>
+
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="closeGoalModal()" class="flex-1 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-text-main-light dark:text-text-main-dark hover:bg-gray-300 dark:hover:bg-gray-600 font-semibold transition-all">
+                            Cancel
+                        </button>
+                        <button type="submit" class="flex-1 px-4 py-2 rounded-lg bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold transition-all">
+                            Create Goal
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="logout-modal">
+        <div class="logout-card">
+            <div class="logout-icon">
+                <i class="bx bx-log-out"></i>
+            </div>
+            <h2 class="logout-title">Ready to go?</h2>
+            <p class="logout-message">You'll be logged out of your Corporalis account. You can log back in anytime.</p>
+            <div class="logout-buttons">
+                <button class="logout-btn-confirm" onclick="confirmLogout()">
+                    <i class="bx bx-check" style="margin-right: 0.5rem; vertical-align: middle;"></i>
+                    Yes, Logout
+                </button>
+                <button class="logout-btn-cancel" onclick="closeLogoutModal()">
+                    <i class="bx bx-x" style="margin-right: 0.5rem; vertical-align: middle;"></i>
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const themeToggle = document.getElementById('themeToggle');
+            let sidebarOpen = false;
+
+            // Theme toggle
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    document.documentElement.classList.toggle('dark');
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('bx-moon');
+                    icon.classList.toggle('bx-sun');
+                    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                });
+
+                // Load theme preference
+                if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                    themeToggle.querySelector('i').classList.remove('bx-moon');
+                    themeToggle.querySelector('i').classList.add('bx-sun');
+                }
+            }
+
+            // Mobile menu toggle
+            if (mobileMenuBtn && mobileSidebar) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    sidebarOpen = !sidebarOpen;
+                    if (sidebarOpen) {
+                        mobileSidebar.classList.remove('hidden');
+                    } else {
+                        mobileSidebar.classList.add('hidden');
+                    }
+                });
+
+                // Close menu when clicking a link
+                mobileSidebar.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        sidebarOpen = false;
+                        mobileSidebar.classList.add('hidden');
+                    });
+                });
+            }
+        });
+
+        function openGoalModal() {
+            document.getElementById('goalModal').classList.add('active');
+        }
+
+        function closeGoalModal() {
+            document.getElementById('goalModal').classList.remove('active');
+        }
+
+        function handleGoalSubmit(event) {
+            event.preventDefault();
+            alert('Goal created successfully!');
+            closeGoalModal();
+        }
+
+        function logout() {
+            openLogoutModal();
+        }
+
+        function openLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            const isDark = document.documentElement.classList.contains('dark');
+            modal.classList.toggle('dark', isDark);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function confirmLogout() {
+            localStorage.removeItem('userLoggedIn');
+            window.location.href = 'fitness.html';
+        }
+
+        document.getElementById('logoutModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLogoutModal();
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('goalModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeGoalModal();
+            }
+        });
+    </script>
+</body>
+</html>

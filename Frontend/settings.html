@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporalis - Settings</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#39E01E",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#121212",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "text-main-light": "#111111",
+                        "text-main-dark": "#EAEAEA",
+                        "text-muted-light": "#666666",
+                        "text-muted-dark": "#A0A0A0",
+                    },
+                    fontFamily: {
+                        display: ["Syne", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)",
+                        'grid-pattern-dark': "linear-gradient(to right, #2a2a2a 1px, transparent 1px), linear-gradient(to bottom, #2a2a2a 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'scale-in': 'scale-in 0.5s ease-out forwards',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-scale-in {
+            animation: scale-in 0.5s ease-out forwards;
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .toggle-switch {
+            display: inline-flex;
+            width: 50px;
+            height: 28px;
+            background-color: #d1d5db;
+            border-radius: 9999px;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch.active {
+            background-color: #39E01E;
+        }
+        .toggle-switch span {
+            display: block;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s;
+        }
+        .toggle-switch.active span {
+            left: 24px;
+        }
+        /* Mobile responsiveness for touch-friendly elements */
+        @media (max-width: 640px) {
+            button, a {
+                min-height: 44px;
+            }
+            input, textarea, select {
+                font-size: 16px;
+            }
+            .logout-card {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+            .logout-buttons {
+                gap: 0.75rem;
+            }
+            .logout-btn-confirm, .logout-btn-cancel {
+                padding: 0.65rem 1.25rem;
+                font-size: 0.9rem;
+            }
+        }
+        .sidebar-active {
+            background-color: rgba(57, 224, 30, 0.1);
+            border-left: 3px solid #39E01E;
+        }
+        .setting-tab {
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .setting-tab.active {
+            background-color: rgba(57, 224, 30, 0.2);
+            color: #39E01E;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body antialiased transition-colors duration-300">
+    <!-- Grid Background -->
+    <div class="fixed inset-0 bg-grid-pattern dark:bg-grid-pattern-dark bg-[size:4rem_4rem] pointer-events-none opacity-40 z-0"></div>
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="hidden lg:flex lg:w-64 bg-surface-light dark:bg-surface-dark border-r border-gray-200 dark:border-gray-800 flex-col fixed h-screen z-40">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-800">
+                <a href="dashboard.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <i class="bx bxs-globe text-text-main-light dark:text-text-main-dark text-2xl"></i>
+                    <span class="font-display font-bold text-lg text-text-main-light dark:text-text-main-dark">Corporalis</span>
+                </a>
+            </div>
+
+            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-home text-2xl"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="my-programs.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-dumbbell text-2xl"></i>
+                    <span>My Programs</span>
+                </a>
+                <a href="progress.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-bar-chart-alt-2 text-2xl"></i>
+                    <span>Progress</span>
+                </a>
+                <a href="bookings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-calendar text-2xl"></i>
+                    <span>Bookings</span>
+                </a>
+                <a href="goals.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-heart text-2xl"></i>
+                    <span>Goals</span>
+                </a>
+                <a href="messages.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-message-rounded text-2xl"></i>
+                    <span>Messages</span>
+                </a>
+                <a href="settings.html" class="sidebar-active flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-medium transition-all">
+                    <i class="bx bx-cog text-2xl"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+                <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-red-500/10 hover:text-red-500 transition-all">
+                    <i class="bx bx-log-out text-2xl"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile Top Bar & Main Content -->
+        <div class="w-full lg:ml-64 flex flex-col min-h-screen">
+            <!-- Top Navigation -->
+            <nav class="relative z-30 bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 sticky top-0">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <button id="mobileMenuBtn" class="lg:hidden p-2 hover:bg-primary/10 rounded-lg transition-colors">
+                            <i class="bx bx-menu text-2xl text-text-main-light dark:text-text-main-dark"></i>
+                        </button>
+                        <h1 class="font-display font-bold text-2xl text-text-main-light dark:text-text-main-dark">Settings</h1>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button id="themeToggle" class="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark">
+                            <i class="bx bx-moon text-2xl"></i>
+                        </button>
+                        <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center cursor-pointer hover:bg-primary/30 transition-colors">
+                            <i class="bx bx-user text-primary text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Mobile Sidebar -->
+            <div id="mobileSidebar" class="hidden lg:hidden bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800">
+                <nav class="px-4 py-4 space-y-2">
+                    <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-home text-2xl"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="my-programs.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-dumbbell text-2xl"></i>
+                        <span>My Programs</span>
+                    </a>
+                    <a href="progress.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-bar-chart-alt-2 text-2xl"></i>
+                        <span>Progress</span>
+                    </a>
+                    <a href="bookings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-calendar text-2xl"></i>
+                        <span>Bookings</span>
+                    </a>
+                    <a href="goals.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-heart text-2xl"></i>
+                        <span>Goals</span>
+                    </a>
+                    <a href="messages.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-message-rounded text-2xl"></i>
+                        <span>Messages</span>
+                    </a>
+                    <a href="fitness.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-home-alt text-2xl"></i>
+                        <span>Back to Home</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <main class="relative z-10 flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8">
+                <!-- Header -->
+                <section class="mb-8 animate-fade-in-up">
+                    <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                        Settings
+                    </h2>
+                    <p class="text-sm sm:text-base text-text-muted-light dark:text-text-muted-dark">
+                        Manage your account and preferences
+                    </p>
+                </section>
+
+                <!-- Settings Tabs -->
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8">
+                    <!-- Tab Navigation (Sidebar) -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg p-3 sm:p-4 space-y-2 animate-fade-in-up sticky top-24">
+                            <button class="setting-tab active w-full text-left flex items-center gap-3" onclick="switchTab('profile')">
+                                <i class="bx bx-user text-xl"></i>
+                                <span>Profile</span>
+                            </button>
+                            <button class="setting-tab w-full text-left flex items-center gap-3" onclick="switchTab('privacy')">
+                                <i class="bx bx-shield text-xl"></i>
+                                <span>Privacy</span>
+                            </button>
+                            <button class="setting-tab w-full text-left flex items-center gap-3" onclick="switchTab('notifications')">
+                                <i class="bx bx-bell text-xl"></i>
+                                <span>Notifications</span>
+                            </button>
+                            <button class="setting-tab w-full text-left flex items-center gap-3" onclick="switchTab('billing')">
+                                <i class="bx bx-credit-card text-xl"></i>
+                                <span>Billing</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="lg:col-span-3">
+                        <!-- Profile Settings -->
+                        <div id="profile-tab" class="animate-fade-in-up">
+                            <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg p-4 sm:p-6 lg:p-8 space-y-6">
+                                <!-- Profile Picture -->
+                                <div class="pb-6 border-b border-gray-200 dark:border-gray-800">
+                                    <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-4">Profile Picture</h3>
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center">
+                                            <i class="bx bxs-user text-primary text-4xl"></i>
+                                        </div>
+                                        <div>
+                                            <button class="px-4 py-2 bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold rounded-lg transition-all">
+                                                Change Photo
+                                            </button>
+                                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm mt-2">JPG, PNG or GIF (Max 5MB)</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Personal Information -->
+                                <div class="pb-6 border-b border-gray-200 dark:border-gray-800">
+                                    <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-4">Personal Information</h3>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">First Name</label>
+                                            <input type="text" value="Alex" class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                                        </div>
+                                        <div>
+                                            <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Last Name</label>
+                                            <input type="text" value="Johnson" class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                                        </div>
+                                        <div>
+                                            <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Email</label>
+                                            <input type="email" value="alex@example.com" class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                                        </div>
+                                        <div>
+                                            <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Phone</label>
+                                            <input type="tel" value="+1 (555) 123-4567" class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Fitness Profile -->
+                                <div class="pb-6 border-b border-gray-200 dark:border-gray-800">
+                                    <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-4">Fitness Profile</h3>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Height (cm)</label>
+                                            <input type="number" value="180" class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                                        </div>
+                                        <div>
+                                            <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Weight (kg)</label>
+                                            <input type="number" value="78" class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                                        </div>
+                                        <div>
+                                            <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Fitness Level</label>
+                                            <select class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                                                <option>Intermediate</option>
+                                                <option>Beginner</option>
+                                                <option>Advanced</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-text-muted-light dark:text-text-muted-dark text-sm font-medium mb-2">Goal</label>
+                                            <select class="w-full px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                                                <option>Weight Loss</option>
+                                                <option>Build Muscle</option>
+                                                <option>Improve Endurance</option>
+                                                <option>General Fitness</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Save Button -->
+                                <button class="w-full sm:w-auto px-6 py-3 bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold rounded-lg transition-all flex items-center justify-center gap-2">
+                                    <i class="bx bx-check text-xl"></i>
+                                    <span>Save Changes</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Privacy Settings (Hidden by default) -->
+                        <div id="privacy-tab" class="hidden">
+                            <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg p-6 sm:p-8 space-y-6">
+                                <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark">Privacy Settings</h3>
+                                
+                                <div class="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-800">
+                                    <div>
+                                        <p class="font-semibold text-text-main-light dark:text-text-main-dark">Profile Visibility</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Allow other members to see your profile</p>
+                                    </div>
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                        <span></span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-800">
+                                    <div>
+                                        <p class="font-semibold text-text-main-light dark:text-text-main-dark">Show Progress</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Display your fitness progress publicly</p>
+                                    </div>
+                                    <div class="toggle-switch" onclick="toggleSwitch(this)">
+                                        <span></span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-800">
+                                    <div>
+                                        <p class="font-semibold text-text-main-light dark:text-text-main-dark">Allow Messages</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Let other members send you messages</p>
+                                    </div>
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                        <span></span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between py-4">
+                                    <div>
+                                        <p class="font-semibold text-text-main-light dark:text-text-main-dark">Data Collection</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Allow us to collect analytics data</p>
+                                    </div>
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notifications Settings (Hidden by default) -->
+                        <div id="notifications-tab" class="hidden">
+                            <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg p-6 sm:p-8 space-y-6">
+                                <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark">Notification Preferences</h3>
+                                
+                                <div class="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-800">
+                                    <div>
+                                        <p class="font-semibold text-text-main-light dark:text-text-main-dark">Workout Reminders</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Get notified before scheduled workouts</p>
+                                    </div>
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                        <span></span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-800">
+                                    <div>
+                                        <p class="font-semibold text-text-main-light dark:text-text-main-dark">Coach Messages</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Receive messages from your coaches</p>
+                                    </div>
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                        <span></span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-800">
+                                    <div>
+                                        <p class="font-semibold text-text-main-light dark:text-text-main-dark">Promotions & Offers</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Get notified about special offers</p>
+                                    </div>
+                                    <div class="toggle-switch" onclick="toggleSwitch(this)">
+                                        <span></span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between py-4">
+                                    <div>
+                                        <p class="font-semibold text-text-main-light dark:text-text-main-dark">Weekly Summary</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Receive weekly fitness summary emails</p>
+                                    </div>
+                                    <div class="toggle-switch active" onclick="toggleSwitch(this)">
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Billing Settings (Hidden by default) -->
+                        <div id="billing-tab" class="hidden">
+                            <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg p-6 sm:p-8 space-y-6">
+                                <div class="pb-6 border-b border-gray-200 dark:border-gray-800">
+                                    <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-4">Current Plan</h3>
+                                    <div class="flex items-center justify-between p-4 bg-primary/10 rounded-lg">
+                                        <div>
+                                            <p class="font-semibold text-text-main-light dark:text-text-main-dark">Premium Plan</p>
+                                            <p class="text-text-muted-light dark:text-text-muted-dark text-sm">$99/month • Renews on Jan 26, 2026</p>
+                                        </div>
+                                        <button class="px-4 py-2 bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold rounded-lg transition-all">
+                                            Upgrade
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="pb-6 border-b border-gray-200 dark:border-gray-800">
+                                    <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-4">Payment Method</h3>
+                                    <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <i class="bx bx-credit-card text-3xl text-primary"></i>
+                                            <div>
+                                                <p class="font-semibold text-text-main-light dark:text-text-main-dark">Visa ending in 4242</p>
+                                                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Expires 12/26</p>
+                                            </div>
+                                        </div>
+                                        <button class="px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-all">
+                                            Update
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark mb-4">Billing History</h3>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                                            <div>
+                                                <p class="font-semibold text-text-main-light dark:text-text-main-dark">Premium Subscription</p>
+                                                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Jan 26, 2025</p>
+                                            </div>
+                                            <span class="text-primary font-semibold">$99.00</span>
+                                        </div>
+                                        <div class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                                            <div>
+                                                <p class="font-semibold text-text-main-light dark:text-text-main-dark">Premium Subscription</p>
+                                                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Dec 26, 2024</p>
+                                            </div>
+                                            <span class="text-primary font-semibold">$99.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-gray-200 dark:border-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-4">
+                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                    © 2025 Corporalis. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-6 text-center sm:text-left">
+                <a href="privacy-policy.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Privacy Policy
+                </a>
+                <a href="terms-of-service.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Terms of Service
+                </a>
+                <a href="contact.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Contact
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="logout-modal">
+        <div class="logout-card">
+            <div class="logout-icon">
+                <i class="bx bx-log-out"></i>
+            </div>
+            <h2 class="logout-title">Ready to go?</h2>
+            <p class="logout-message">You'll be logged out of your Corporalis account. You can log back in anytime.</p>
+            <div class="logout-buttons">
+                <button class="logout-btn-confirm" onclick="confirmLogout()">
+                    <i class="bx bx-check" style="margin-right: 0.5rem; vertical-align: middle;"></i>
+                    Yes, Logout
+                </button>
+                <button class="logout-btn-cancel" onclick="closeLogoutModal()">
+                    <i class="bx bx-x" style="margin-right: 0.5rem; vertical-align: middle;"></i>
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const themeToggle = document.getElementById('themeToggle');
+            let sidebarOpen = false;
+
+            // Theme toggle
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    document.documentElement.classList.toggle('dark');
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('bx-moon');
+                    icon.classList.toggle('bx-sun');
+                    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                });
+
+                // Load theme preference
+                if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                    themeToggle.querySelector('i').classList.remove('bx-moon');
+                    themeToggle.querySelector('i').classList.add('bx-sun');
+                }
+            }
+
+            // Mobile menu toggle
+            if (mobileMenuBtn && mobileSidebar) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    sidebarOpen = !sidebarOpen;
+                    if (sidebarOpen) {
+                        mobileSidebar.classList.remove('hidden');
+                    } else {
+                        mobileSidebar.classList.add('hidden');
+                    }
+                });
+
+                // Close menu when clicking a link
+                mobileSidebar.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        sidebarOpen = false;
+                        mobileSidebar.classList.add('hidden');
+                    });
+                });
+            }
+        });
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('[id$="-tab"]').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.remove('hidden');
+
+            // Update active button
+            document.querySelectorAll('.setting-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.setting-tab').classList.add('active');
+        }
+
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+        }
+
+        function logout() {
+            openLogoutModal();
+        }
+
+        function openLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            const isDark = document.documentElement.classList.contains('dark');
+            modal.classList.toggle('dark', isDark);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function confirmLogout() {
+            localStorage.removeItem('userLoggedIn');
+            window.location.href = 'fitness.html';
+        }
+
+        document.getElementById('logoutModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLogoutModal();
+            }
+        });
+    </script>
+</body>
+</html>

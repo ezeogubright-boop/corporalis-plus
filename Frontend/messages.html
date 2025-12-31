@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporalis - Messages</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#39E01E",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#121212",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "text-main-light": "#111111",
+                        "text-main-dark": "#EAEAEA",
+                        "text-muted-light": "#666666",
+                        "text-muted-dark": "#A0A0A0",
+                    },
+                    fontFamily: {
+                        display: ["Syne", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)",
+                        'grid-pattern-dark': "linear-gradient(to right, #2a2a2a 1px, transparent 1px), linear-gradient(to bottom, #2a2a2a 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'scale-in': 'scale-in 0.5s ease-out forwards',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-scale-in {
+            animation: scale-in 0.5s ease-out forwards;
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .message-item {
+            transition: all 0.3s ease;
+        }
+        .message-item:hover {
+            background-color: rgba(57, 224, 30, 0.05);
+        }
+        .message-item.active {
+            background-color: rgba(57, 224, 30, 0.15);
+            border-left: 3px solid #39E01E;
+        }
+        .sidebar-active {
+            background-color: rgba(57, 224, 30, 0.1);
+            border-left: 3px solid #39E01E;
+        }
+        /* Logout Modal Styles */
+        .logout-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .logout-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .logout-card {
+            background-color: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            max-width: 420px;
+            width: 90%;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform: translateY(50px);
+            opacity: 0;
+        }
+        .logout-modal.dark .logout-card {
+            background-color: #1E1E1E;
+            color: #EAEAEA;
+        }
+        .logout-modal.active .logout-card {
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .logout-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+        .logout-icon i {
+            color: white;
+            font-size: 2rem;
+        }
+        .logout-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #111111;
+        }
+        .logout-modal.dark .logout-title {
+            color: #EAEAEA;
+        }
+        .logout-message {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #666666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .logout-modal.dark .logout-message {
+            color: #A0A0A0;
+        }
+        .logout-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-direction: column-reverse;
+        }
+        .logout-btn-confirm, .logout-btn-cancel {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .logout-btn-confirm {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        .logout-btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        .logout-btn-confirm:active {
+            transform: translateY(0);
+        }
+        .logout-btn-cancel {
+            background-color: #f0f0f0;
+            color: #111111;
+        }
+        .logout-modal.dark .logout-btn-cancel {
+            background-color: #2a2a2a;
+            color: #EAEAEA;
+        }
+        .logout-btn-cancel:hover {
+            background-color: #e0e0e0;
+        }
+        .logout-modal.dark .logout-btn-cancel:hover {
+            background-color: #333333;
+        }
+        /* Mobile responsiveness for touch-friendly elements */
+        @media (max-width: 640px) {
+            button, a {
+                min-height: 44px;
+            }
+            input, textarea, select {
+                font-size: 16px;
+            }
+            .logout-card {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+            .logout-buttons {
+                gap: 0.75rem;
+            }
+            .logout-btn-confirm, .logout-btn-cancel {
+                padding: 0.65rem 1.25rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body antialiased transition-colors duration-300">
+    <!-- Grid Background -->
+    <div class="fixed inset-0 bg-grid-pattern dark:bg-grid-pattern-dark bg-[size:4rem_4rem] pointer-events-none opacity-40 z-0"></div>
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="hidden lg:flex lg:w-64 bg-surface-light dark:bg-surface-dark border-r border-gray-200 dark:border-gray-800 flex-col fixed h-screen z-40">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-800">
+                <a href="dashboard.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <i class="bx bxs-globe text-text-main-light dark:text-text-main-dark text-2xl"></i>
+                    <span class="font-display font-bold text-lg text-text-main-light dark:text-text-main-dark">Corporalis</span>
+                </a>
+            </div>
+
+            <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-home text-2xl"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="my-programs.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-dumbbell text-2xl"></i>
+                    <span>My Programs</span>
+                </a>
+                <a href="progress.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-bar-chart-alt-2 text-2xl"></i>
+                    <span>Progress</span>
+                </a>
+                <a href="bookings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-calendar text-2xl"></i>
+                    <span>Bookings</span>
+                </a>
+                <a href="goals.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-heart text-2xl"></i>
+                    <span>Goals</span>
+                </a>
+                <a href="messages.html" class="sidebar-active flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-medium transition-all">
+                    <i class="bx bx-message-rounded text-2xl"></i>
+                    <span>Messages</span>
+                </a>
+                <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+                    <i class="bx bx-cog text-2xl"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+                <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-red-500/10 hover:text-red-500 transition-all">
+                    <i class="bx bx-log-out text-2xl"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Mobile Top Bar & Main Content -->
+        <div class="w-full lg:ml-64 flex flex-col min-h-screen">
+            <!-- Top Navigation -->
+            <nav class="relative z-30 bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 sticky top-0">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <button id="mobileMenuBtn" class="lg:hidden p-2 hover:bg-primary/10 rounded-lg transition-colors">
+                            <i class="bx bx-menu text-2xl text-text-main-light dark:text-text-main-dark"></i>
+                        </button>
+                        <h1 class="font-display font-bold text-2xl text-text-main-light dark:text-text-main-dark">Messages</h1>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button id="themeToggle" class="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark">
+                            <i class="bx bx-moon text-2xl"></i>
+                        </button>
+                        <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center cursor-pointer hover:bg-primary/30 transition-colors">
+                            <i class="bx bx-user text-primary text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Mobile Sidebar -->
+            <div id="mobileSidebar" class="hidden lg:hidden bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800">
+                <nav class="px-4 py-4 space-y-2">
+                    <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-home text-2xl"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="my-programs.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-dumbbell text-2xl"></i>
+                        <span>My Programs</span>
+                    </a>
+                    <a href="progress.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-bar-chart-alt-2 text-2xl"></i>
+                        <span>Progress</span>
+                    </a>
+                    <a href="bookings.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-calendar text-2xl"></i>
+                        <span>Bookings</span>
+                    </a>
+                    <a href="goals.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-heart text-2xl"></i>
+                        <span>Goals</span>
+                    </a>
+                    <a href="messages.html" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary font-medium">
+                        <i class="bx bx-message-rounded text-2xl"></i>
+                        <span>Messages</span>
+                    </a>
+                    <a href="fitness.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                        <i class="bx bx-home-alt text-2xl"></i>
+                        <span>Back to Home</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <main class="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 min-h-[400px] sm:h-[600px]">
+                    <!-- Conversations List -->
+                    <div class="lg:col-span-1 bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg flex flex-col animate-fade-in-up hidden lg:flex">
+                        <div class="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-800">
+                            <h3 class="font-display text-lg sm:text-xl font-bold text-text-main-light dark:text-text-main-dark mb-3 sm:mb-4">Conversations</h3>
+                            <div class="relative">
+                                <i class="bx bx-search absolute left-3 top-3 text-text-muted-light dark:text-text-muted-dark"></i>
+                                <input type="text" placeholder="Search messages..." class="w-full pl-10 pr-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                            </div>
+                        </div>
+
+                        <div class="flex-1 overflow-y-auto">
+                            <!-- Conversation 1 -->
+                            <div class="message-item active p-4 border-b border-gray-200 dark:border-gray-800 cursor-pointer">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                                        <i class="bx bxs-user text-primary text-xl"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-semibold text-text-main-light dark:text-text-main-dark truncate">Sarah Williams</h4>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm truncate">Great job on the strength training!</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-xs mt-1">2 min ago</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Conversation 2 -->
+                            <div class="message-item p-4 border-b border-gray-200 dark:border-gray-800 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                                        <i class="bx bxs-user text-blue-500 text-xl"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-semibold text-text-main-light dark:text-text-main-dark truncate">Alex Johnson</h4>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm truncate">Your fitness assessment results are ready</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-xs mt-1">1 hour ago</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Conversation 3 -->
+                            <div class="message-item p-4 border-b border-gray-200 dark:border-gray-800 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                                        <i class="bx bxs-user text-green-500 text-xl"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-semibold text-text-main-light dark:text-text-main-dark truncate">Marcus Thompson</h4>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm truncate">Let's schedule your next session</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-xs mt-1">3 hours ago</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Conversation 4 -->
+                            <div class="message-item p-4 border-b border-gray-200 dark:border-gray-800 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-12 rounded-full bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                                        <i class="bx bxs-user text-orange-500 text-xl"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-semibold text-text-main-light dark:text-text-main-dark truncate">Maria (Nutritionist)</h4>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm truncate">Check your nutrition plan updates</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-xs mt-1">Yesterday</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Conversation 5 -->
+                            <div class="message-item p-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                                        <i class="bx bxs-user text-purple-500 text-xl"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-semibold text-text-main-light dark:text-text-main-dark truncate">Support Team</h4>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm truncate">How can we help you?</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-xs mt-1">2 days ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Area -->
+                    <div class="col-span-1 lg:col-span-2 bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg flex flex-col animate-fade-in-up delay-100">
+                        <!-- Chat Header -->
+                        <div class="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                                    <i class="bx bxs-user text-primary text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-text-main-light dark:text-text-main-dark">Sarah Williams</h4>
+                                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">Active now</p>
+                                </div>
+                            </div>
+                            <button class="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                <i class="bx bx-dots-vertical text-2xl text-text-main-light dark:text-text-main-dark"></i>
+                            </button>
+                        </div>
+
+                        <!-- Messages -->
+                        <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                            <!-- Message 1 (Received) -->
+                            <div class="flex justify-start">
+                                <div class="max-w-xs px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700">
+                                    <p class="text-gray-800 dark:text-gray-200">Great job on the strength training yesterday!</p>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">2 min ago</p>
+                                </div>
+                            </div>
+
+                            <!-- Message 2 (Received) -->
+                            <div class="flex justify-start">
+                                <div class="max-w-xs px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700">
+                                    <p class="text-gray-800 dark:text-gray-200">Your form was excellent. Keep it up!</p>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">2 min ago</p>
+                                </div>
+                            </div>
+
+                            <!-- Message 3 (Sent) -->
+                            <div class="flex justify-end">
+                                <div class="max-w-xs px-4 py-2 rounded-lg bg-primary text-white">
+                                    <p>Thank you! I'm really enjoying the program</p>
+                                    <p class="text-xs text-primary-100 mt-1">Just now</p>
+                                </div>
+                            </div>
+
+                            <!-- Message 4 (Sent) -->
+                            <div class="flex justify-end">
+                                <div class="max-w-xs px-4 py-2 rounded-lg bg-primary text-white">
+                                    <p>When should I schedule the next session?</p>
+                                    <p class="text-xs text-primary-100 mt-1">Just now</p>
+                                </div>
+                            </div>
+
+                            <!-- Message 5 (Received) -->
+                            <div class="flex justify-start">
+                                <div class="max-w-xs px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700">
+                                    <p class="text-gray-800 dark:text-gray-200">Let's schedule for Friday at 6 PM. Does that work?</p>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">1 min ago</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Message Input -->
+                        <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+                            <div class="flex gap-3">
+                                <input type="text" placeholder="Type a message..." class="flex-1 px-4 py-2 rounded-lg bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                                <button class="p-2 bg-primary hover:bg-opacity-90 text-white dark:text-black rounded-lg transition-all">
+                                    <i class="bx bx-send text-2xl"></i>
+                                </button>
+                                <button class="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                    <i class="bx bx-paperclip text-2xl text-text-main-light dark:text-text-main-dark"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-gray-200 dark:border-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-4">
+                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                    © 2025 Corporalis. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-6 text-center sm:text-left">
+                <a href="privacy-policy.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Privacy Policy
+                </a>
+                <a href="terms-of-service.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Terms of Service
+                </a>
+                <a href="contact.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Contact
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="logout-modal">
+        <div class="logout-card">
+            <div class="logout-icon">
+                <i class="bx bx-log-out"></i>
+            </div>
+            <h2 class="logout-title">Ready to go?</h2>
+            <p class="logout-message">You'll be logged out of your Corporalis account. You can log back in anytime.</p>
+            <div class="logout-buttons">
+                <button class="logout-btn-confirm" onclick="confirmLogout()">
+                    <i class="bx bx-check" style="margin-right: 0.5rem; vertical-align: middle;"></i>
+                    Yes, Logout
+                </button>
+                <button class="logout-btn-cancel" onclick="closeLogoutModal()">
+                    <i class="bx bx-x" style="margin-right: 0.5rem; vertical-align: middle;"></i>
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileSidebar = document.getElementById('mobileSidebar');
+            const themeToggle = document.getElementById('themeToggle');
+            let sidebarOpen = false;
+
+            // Theme toggle
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    document.documentElement.classList.toggle('dark');
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('bx-moon');
+                    icon.classList.toggle('bx-sun');
+                    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                });
+
+                // Load theme preference
+                if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                    themeToggle.querySelector('i').classList.remove('bx-moon');
+                    themeToggle.querySelector('i').classList.add('bx-sun');
+                }
+            }
+
+            // Mobile menu toggle
+            if (mobileMenuBtn && mobileSidebar) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    sidebarOpen = !sidebarOpen;
+                    if (sidebarOpen) {
+                        mobileSidebar.classList.remove('hidden');
+                    } else {
+                        mobileSidebar.classList.add('hidden');
+                    }
+                });
+
+                // Close menu when clicking a link
+                mobileSidebar.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        sidebarOpen = false;
+                        mobileSidebar.classList.add('hidden');
+                    });
+                });
+            }
+        });
+
+        function logout() {
+            openLogoutModal();
+        }
+
+        function openLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            const isDark = document.documentElement.classList.contains('dark');
+            modal.classList.toggle('dark', isDark);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLogoutModal() {
+            const modal = document.getElementById('logoutModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function confirmLogout() {
+            localStorage.removeItem('userLoggedIn');
+            window.location.href = 'fitness.html';
+        }
+
+        document.getElementById('logoutModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLogoutModal();
+            }
+        });
+    </script>
+</body>
+</html>

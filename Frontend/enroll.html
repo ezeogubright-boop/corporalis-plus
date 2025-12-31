@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporalis - Enroll in Fitness Program</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#39E01E",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#121212",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "text-main-light": "#111111",
+                        "text-main-dark": "#EAEAEA",
+                        "text-muted-light": "#666666",
+                        "text-muted-dark": "#A0A0A0",
+                    },
+                    fontFamily: {
+                        display: ["Syne", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)",
+                        'grid-pattern-dark': "linear-gradient(to right, #2a2a2a 1px, transparent 1px), linear-gradient(to bottom, #2a2a2a 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'scale-in': 'scale-in 0.5s ease-out forwards',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-scale-in {
+            animation: scale-in 0.5s ease-out forwards;
+        }
+        .delay-100 {
+            animation-delay: 100ms;
+        }
+        .delay-200 {
+            animation-delay: 200ms;
+        }
+        .delay-300 {
+            animation-delay: 300ms;
+        }
+        .delay-400 {
+            animation-delay: 400ms;
+        }
+        input, textarea, select {
+            transition: border-color 0.3s ease;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #39E01E !important;
+            box-shadow: 0 0 0 3px rgba(57, 224, 30, 0.1);
+        }
+        .program-selector {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .program-selector.active {
+            border-color: #39E01E;
+            background-color: rgba(57, 224, 30, 0.05);
+        }
+        .checkbox-item {
+            transition: all 0.3s ease;
+        }
+        .checkbox-item:hover {
+            background-color: rgba(57, 224, 30, 0.05);
+        }
+        .success-modal {
+            animation: scale-in 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body antialiased transition-colors duration-300">
+    <!-- Grid Background -->
+    <div class="fixed inset-0 bg-grid-pattern dark:bg-grid-pattern-dark bg-[size:4rem_4rem] pointer-events-none opacity-40 z-0"></div>
+    <div class="fixed top-20 left-[15%] w-10 h-10 bg-primary/20 blur-sm dark:bg-primary/10 z-0"></div>
+    <div class="fixed top-40 right-[35%] w-8 h-8 bg-primary/15 blur-sm dark:bg-primary/10 z-0"></div>
+    <div class="fixed bottom-32 left-[40%] w-16 h-16 bg-primary/10 blur-xl rounded-full z-0"></div>
+
+    <!-- Navigation -->
+    <nav class="relative z-50 w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex justify-between items-center">
+        <a href="fitness.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <i class="bx bxs-globe text-text-main-light dark:text-text-main-dark text-2xl sm:text-3xl"></i>
+            <span class="font-display font-bold text-lg sm:text-xl text-text-main-light dark:text-text-main-dark">Corporalis</span>
+        </a>
+        <div class="flex items-center gap-2 sm:gap-3">
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark" title="Toggle dark mode">
+                <i class="bx bx-moon text-2xl"></i>
+            </button>
+            <a href="login.html" class="bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base rounded-full transition-transform active:scale-95 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/40">
+                Log in
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
+        <!-- Header -->
+        <section class="mb-12 text-center">
+            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-text-main-light dark:text-text-main-dark mb-4 animate-fade-in-up">
+                Enroll in a <span class="text-primary">Program</span>
+            </h1>
+            <p class="text-text-muted-light dark:text-text-muted-dark text-sm sm:text-base max-w-2xl mx-auto animate-fade-in-up delay-100">
+                Start your fitness transformation today with our expert-designed programs
+            </p>
+        </section>
+
+        <!-- Enrollment Container -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 mb-16">
+            <!-- Enrollment Form -->
+            <div class="lg:col-span-2">
+                <form id="enrollmentForm" class="space-y-8">
+                    <!-- Program Selection -->
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up">
+                        <h2 class="font-display text-2xl sm:text-3xl font-bold text-text-main-light dark:text-text-main-dark mb-6 flex items-center gap-3">
+                            <i class="bx bx-dumbbell text-primary text-3xl"></i>
+                            Select Your Program
+                        </h2>
+                        <div class="space-y-3">
+                            <label class="program-selector active border-2 border-primary rounded-lg p-4 flex items-start gap-4 bg-primary/5 cursor-pointer">
+                                <input type="radio" name="program" value="strength-builder" class="mt-1 w-4 h-4 text-primary cursor-pointer" checked>
+                                <div class="flex-1">
+                                    <p class="font-bold text-text-main-light dark:text-text-main-dark">Strength Builder</p>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">8 weeks • Beginner • Build Muscle & Power</p>
+                                </div>
+                            </label>
+                            <label class="program-selector border-2 border-gray-300 dark:border-gray-700 rounded-lg p-4 flex items-start gap-4 hover:border-primary transition-colors cursor-pointer">
+                                <input type="radio" name="program" value="cardio-blast" class="mt-1 w-4 h-4 text-primary cursor-pointer">
+                                <div class="flex-1">
+                                    <p class="font-bold text-text-main-light dark:text-text-main-dark">Cardio Blast</p>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">6 weeks • Intermediate • High Energy & Endurance</p>
+                                </div>
+                            </label>
+                            <label class="program-selector border-2 border-gray-300 dark:border-gray-700 rounded-lg p-4 flex items-start gap-4 hover:border-primary transition-colors cursor-pointer">
+                                <input type="radio" name="program" value="weight-loss-journey" class="mt-1 w-4 h-4 text-primary cursor-pointer">
+                                <div class="flex-1">
+                                    <p class="font-bold text-text-main-light dark:text-text-main-dark">Weight Loss Journey</p>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">12 weeks • All Levels • Sustainable Fat Loss</p>
+                                </div>
+                            </label>
+                            <label class="program-selector border-2 border-gray-300 dark:border-gray-700 rounded-lg p-4 flex items-start gap-4 hover:border-primary transition-colors cursor-pointer">
+                                <input type="radio" name="program" value="muscle-hypertrophy" class="mt-1 w-4 h-4 text-primary cursor-pointer">
+                                <div class="flex-1">
+                                    <p class="font-bold text-text-main-light dark:text-text-main-dark">Muscle Hypertrophy</p>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">10 weeks • Advanced • Serious Muscle Growth</p>
+                                </div>
+                            </label>
+                            <label class="program-selector border-2 border-gray-300 dark:border-gray-700 rounded-lg p-4 flex items-start gap-4 hover:border-primary transition-colors cursor-pointer">
+                                <input type="radio" name="program" value="flexibility-mobility" class="mt-1 w-4 h-4 text-primary cursor-pointer">
+                                <div class="flex-1">
+                                    <p class="font-bold text-text-main-light dark:text-text-main-dark">Flexibility & Mobility</p>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">4 weeks • Beginner • Enhanced Range of Motion</p>
+                                </div>
+                            </label>
+                            <label class="program-selector border-2 border-gray-300 dark:border-gray-700 rounded-lg p-4 flex items-start gap-4 hover:border-primary transition-colors cursor-pointer">
+                                <input type="radio" name="program" value="total-body-transformation" class="mt-1 w-4 h-4 text-primary cursor-pointer">
+                                <div class="flex-1">
+                                    <p class="font-bold text-text-main-light dark:text-text-main-dark">Total Body Transformation</p>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark">8 weeks • Intermediate • Complete Fitness Overhaul</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Personal Information -->
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up delay-100">
+                        <h2 class="font-display text-2xl sm:text-3xl font-bold text-text-main-light dark:text-text-main-dark mb-6 flex items-center gap-3">
+                            <i class="bx bx-user text-primary text-3xl"></i>
+                            Personal Information
+                        </h2>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">First Name</label>
+                                    <input type="text" name="firstName" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark">
+                                </div>
+                                <div>
+                                    <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Last Name</label>
+                                    <input type="text" name="lastName" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Email Address</label>
+                                <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark">
+                            </div>
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Phone Number</label>
+                                <input type="tel" name="phone" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Age</label>
+                                    <input type="number" name="age" min="16" max="120" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark">
+                                </div>
+                                <div>
+                                    <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Gender</label>
+                                    <select name="gender" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark">
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fitness Assessment -->
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up delay-200">
+                        <h2 class="font-display text-2xl sm:text-3xl font-bold text-text-main-light dark:text-text-main-dark mb-6 flex items-center gap-3">
+                            <i class="bx bx-bar-chart text-primary text-3xl"></i>
+                            Fitness Assessment
+                        </h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-3">Current Fitness Level</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center gap-3 p-3 rounded-lg checkbox-item cursor-pointer">
+                                        <input type="radio" name="fitnessLevel" value="beginner" class="w-4 h-4 text-primary cursor-pointer" checked>
+                                        <span class="text-text-main-light dark:text-text-main-dark">Beginner - New to fitness</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-3 rounded-lg checkbox-item cursor-pointer">
+                                        <input type="radio" name="fitnessLevel" value="intermediate" class="w-4 h-4 text-primary cursor-pointer">
+                                        <span class="text-text-main-light dark:text-text-main-dark">Intermediate - Training 3-6 months</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-3 rounded-lg checkbox-item cursor-pointer">
+                                        <input type="radio" name="fitnessLevel" value="advanced" class="w-4 h-4 text-primary cursor-pointer">
+                                        <span class="text-text-main-light dark:text-text-main-dark">Advanced - Training 1+ years</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-3">Primary Fitness Goals (Select all that apply)</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center gap-3 p-3 rounded-lg checkbox-item cursor-pointer">
+                                        <input type="checkbox" name="goals" value="weight-loss" class="w-4 h-4 text-primary cursor-pointer">
+                                        <span class="text-text-main-light dark:text-text-main-dark">Weight Loss</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-3 rounded-lg checkbox-item cursor-pointer">
+                                        <input type="checkbox" name="goals" value="muscle-gain" class="w-4 h-4 text-primary cursor-pointer">
+                                        <span class="text-text-main-light dark:text-text-main-dark">Muscle Gain</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-3 rounded-lg checkbox-item cursor-pointer">
+                                        <input type="checkbox" name="goals" value="endurance" class="w-4 h-4 text-primary cursor-pointer">
+                                        <span class="text-text-main-light dark:text-text-main-dark">Improve Endurance</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-3 rounded-lg checkbox-item cursor-pointer">
+                                        <input type="checkbox" name="goals" value="strength" class="w-4 h-4 text-primary cursor-pointer">
+                                        <span class="text-text-main-light dark:text-text-main-dark">Build Strength</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-3 rounded-lg checkbox-item cursor-pointer">
+                                        <input type="checkbox" name="goals" value="flexibility" class="w-4 h-4 text-primary cursor-pointer">
+                                        <span class="text-text-main-light dark:text-text-main-dark">Improve Flexibility</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 p-3 rounded-lg checkbox-item cursor-pointer">
+                                        <input type="checkbox" name="goals" value="general-health" class="w-4 h-4 text-primary cursor-pointer">
+                                        <span class="text-text-main-light dark:text-text-main-dark">General Health & Wellness</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Health & Preferences -->
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up delay-300">
+                        <h2 class="font-display text-2xl sm:text-3xl font-bold text-text-main-light dark:text-text-main-dark mb-6 flex items-center gap-3">
+                            <i class="bx bx-heart text-primary text-3xl"></i>
+                            Health & Preferences
+                        </h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-3">Do you have any injuries or health conditions we should know about?</label>
+                                <textarea name="healthNotes" rows="3" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark" placeholder="Describe any injuries or health concerns..."></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-3">How many days per week can you commit to training?</label>
+                                <select name="trainingDays" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark">
+                                    <option value="">Select training frequency</option>
+                                    <option value="2-3">2-3 days per week</option>
+                                    <option value="3-4">3-4 days per week</option>
+                                    <option value="4-5">4-5 days per week</option>
+                                    <option value="5-6">5-6 days per week</option>
+                                    <option value="6-7">6-7 days per week</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms Checkbox -->
+                    <div class="flex items-start gap-3 animate-fade-in-up delay-400">
+                        <input type="checkbox" id="terms" name="terms" required class="mt-1 w-5 h-5 text-primary cursor-pointer">
+                        <label for="terms" class="text-text-main-light dark:text-text-main-dark text-sm cursor-pointer">
+                            I confirm that I'm ready to commit to this program and agree to the <a href="terms-of-service.html" class="text-primary font-semibold hover:underline">Terms of Service</a>
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Enrollment Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg sticky top-24 animate-fade-in-up delay-200">
+                    <h2 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-6 flex items-center gap-3">
+                        <i class="bx bx-clipboard text-primary text-3xl"></i>
+                        Enrollment Summary
+                    </h2>
+
+                    <!-- Program Details -->
+                    <div class="mb-8 pb-8 border-b border-gray-200 dark:border-gray-800">
+                        <div class="flex items-start gap-3 mb-4">
+                            <i class="bx text-primary text-2xl flex-shrink-0" id="summaryIcon"></i>
+                            <div>
+                                <p class="font-display text-lg font-bold text-text-main-light dark:text-text-main-dark" id="summaryProgram">Strength Builder</p>
+                                <p class="text-sm text-text-muted-light dark:text-text-muted-dark" id="summaryDetails">8 weeks • Beginner</p>
+                            </div>
+                        </div>
+                        <div class="bg-primary/10 rounded-lg p-4 space-y-2">
+                            <div class="flex items-center gap-2 text-sm text-text-main-light dark:text-text-main-dark">
+                                <i class="bx bx-calendar text-primary"></i>
+                                <span id="summaryDuration">8 weeks</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-text-main-light dark:text-text-main-dark">
+                                <i class="bx bx-bar-chart text-primary"></i>
+                                <span id="summaryLevel">Beginner</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-text-main-light dark:text-text-main-dark">
+                                <i class="bx bx-dumbbell text-primary"></i>
+                                <span id="summaryFrequency">3-4 sessions per week</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- What's Included -->
+                    <div class="mb-8 pb-8 border-b border-gray-200 dark:border-gray-800">
+                        <p class="font-semibold text-text-main-light dark:text-text-main-dark mb-4">What's Included:</p>
+                        <ul class="space-y-2 text-sm text-text-main-light dark:text-text-main-dark">
+                            <li class="flex gap-2">
+                                <i class="bx bx-check text-primary flex-shrink-0"></i>
+                                Video demonstrations
+                            </li>
+                            <li class="flex gap-2">
+                                <i class="bx bx-check text-primary flex-shrink-0"></i>
+                                Detailed workout plans
+                            </li>
+                            <li class="flex gap-2">
+                                <i class="bx bx-check text-primary flex-shrink-0"></i>
+                                Nutrition guidance
+                            </li>
+                            <li class="flex gap-2">
+                                <i class="bx bx-check text-primary flex-shrink-0"></i>
+                                Progress tracking
+                            </li>
+                            <li class="flex gap-2">
+                                <i class="bx bx-check text-primary flex-shrink-0"></i>
+                                Expert support
+                            </li>
+                            <li class="flex gap-2">
+                                <i class="bx bx-check text-primary flex-shrink-0"></i>
+                                Lifetime access
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Free Trial -->
+                    <div class="bg-primary/10 rounded-lg p-4 mb-8 text-center">
+                        <p class="text-text-main-light dark:text-text-main-dark font-semibold text-sm">
+                            <i class="bx bx-gift text-primary mr-2"></i>
+                            Your enrollment includes a 7-day free trial!
+                        </p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" form="enrollmentForm" class="w-full bg-primary hover:bg-opacity-90 text-white dark:text-black font-bold py-4 rounded-lg transition-transform active:scale-95 shadow-lg shadow-primary/30 flex items-center justify-center gap-2 mb-4">
+                        <i class="bx bx-check text-xl"></i>
+                        Complete Enrollment
+                    </button>
+
+                    <!-- Back Link -->
+                    <a href="programs.html" class="w-full text-center text-primary hover:text-opacity-80 transition-colors font-semibold">
+                        ← Back to Programs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50 p-4">
+        <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-8 sm:p-12 text-center max-w-md success-modal">
+            <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="bx bx-check text-primary text-5xl"></i>
+            </div>
+            <h2 class="font-display text-3xl font-bold text-text-main-light dark:text-text-main-dark mb-3">
+                Enrollment Successful!
+            </h2>
+            <p class="text-text-muted-light dark:text-text-muted-dark mb-6">
+                You're officially enrolled in the program. Check your email for login details and program materials.
+            </p>
+            <div class="bg-primary/10 rounded-lg p-4 mb-8">
+                <p class="text-text-main-light dark:text-text-main-dark font-semibold text-sm">
+                    <i class="bx bx-gift text-primary mr-2"></i>
+                    Your 7-day free trial starts now!
+                </p>
+            </div>
+            <a href="dashboard.html" class="w-full bg-primary hover:bg-opacity-90 text-white dark:text-black font-bold py-3 rounded-lg transition-transform active:scale-95 block mb-3">
+                Go to Dashboard
+            </a>
+            <a href="programs.html" class="w-full text-primary hover:text-opacity-80 font-semibold transition-colors">
+                Browse More Programs
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-gray-200 dark:border-gray-800 mt-20 sm:mt-32 py-8 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
+                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                    © 2025 Corporalis. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Facebook">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Twitter">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Instagram">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="YouTube">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="LinkedIn">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-6 text-center sm:text-left">
+                <a href="privacy-policy.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Privacy Policy
+                </a>
+                <a href="terms-of-service.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Terms of Service
+                </a>
+                <a href="contact.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Contact
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const enrollmentForm = document.getElementById('enrollmentForm');
+            const themeToggle = document.getElementById('themeToggle');
+            const successModal = document.getElementById('successModal');
+            const programRadios = document.querySelectorAll('input[name="program"]');
+            const programSelectors = document.querySelectorAll('.program-selector');
+
+            // Program data
+            const programData = {
+                'strength-builder': {
+                    name: 'Strength Builder',
+                    details: '8 weeks • Beginner',
+                    duration: '8 weeks',
+                    level: 'Beginner',
+                    frequency: '3-4 sessions per week',
+                    icon: 'bx-dumbbell'
+                },
+                'cardio-blast': {
+                    name: 'Cardio Blast',
+                    details: '6 weeks • Intermediate',
+                    duration: '6 weeks',
+                    level: 'Intermediate',
+                    frequency: '5-6 sessions per week',
+                    icon: 'bx-run'
+                },
+                'weight-loss-journey': {
+                    name: 'Weight Loss Journey',
+                    details: '12 weeks • All Levels',
+                    duration: '12 weeks',
+                    level: 'All Levels',
+                    frequency: '4-5 sessions per week',
+                    icon: 'bx-leaf'
+                },
+                'muscle-hypertrophy': {
+                    name: 'Muscle Hypertrophy',
+                    details: '10 weeks • Advanced',
+                    duration: '10 weeks',
+                    level: 'Advanced',
+                    frequency: '5-6 sessions per week',
+                    icon: 'bx-target-lock'
+                },
+                'flexibility-mobility': {
+                    name: 'Flexibility & Mobility',
+                    details: '4 weeks • Beginner',
+                    duration: '4 weeks',
+                    level: 'Beginner',
+                    frequency: '4 sessions per week',
+                    icon: 'bx-wellness'
+                },
+                'total-body-transformation': {
+                    name: 'Total Body Transformation',
+                    details: '8 weeks • Intermediate',
+                    duration: '8 weeks',
+                    level: 'Intermediate',
+                    frequency: '4-5 sessions per week',
+                    icon: 'bx-zap'
+                }
+            };
+
+            // Theme toggle
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    document.documentElement.classList.toggle('dark');
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('bx-moon');
+                    icon.classList.toggle('bx-sun');
+                    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                });
+
+                // Load theme preference
+                if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                    themeToggle.querySelector('i').classList.remove('bx-moon');
+                    themeToggle.querySelector('i').classList.add('bx-sun');
+                }
+            }
+
+            // Update summary when program changes
+            function updateSummary() {
+                const selectedProgram = document.querySelector('input[name="program"]:checked').value;
+                const program = programData[selectedProgram];
+
+                document.getElementById('summaryIcon').className = `bx ${program.icon} text-primary text-2xl flex-shrink-0`;
+                document.getElementById('summaryProgram').textContent = program.name;
+                document.getElementById('summaryDetails').textContent = program.details;
+                document.getElementById('summaryDuration').textContent = program.duration;
+                document.getElementById('summaryLevel').textContent = program.level;
+                document.getElementById('summaryFrequency').textContent = program.frequency;
+            }
+
+            // Program selection
+            programRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    programSelectors.forEach(selector => selector.classList.remove('active', 'bg-primary/5'));
+                    this.closest('label').classList.add('active', 'bg-primary/5');
+                    updateSummary();
+                });
+            });
+
+            // Form submission
+            if (enrollmentForm) {
+                enrollmentForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Basic validation
+                    if (!this.checkValidity()) {
+                        alert('Please fill in all required fields.');
+                        return;
+                    }
+
+                    // Show success modal
+                    successModal.classList.remove('hidden');
+
+                    // Reset form
+                    setTimeout(() => {
+                        this.reset();
+                        updateSummary();
+                        document.querySelector('input[name="program"]').click();
+                    }, 2000);
+                });
+            }
+
+            // Initialize summary
+            updateSummary();
+        });
+    </script>
+</body>
+</html>

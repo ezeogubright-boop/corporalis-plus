@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Corporalis</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#39E01E",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#121212",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "text-main-light": "#111111",
+                        "text-main-dark": "#EAEAEA",
+                        "text-muted-light": "#666666",
+                        "text-muted-dark": "#A0A0A0",
+                    },
+                    fontFamily: {
+                        display: ["Syne", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)",
+                        'grid-pattern-dark': "linear-gradient(to right, #2a2a2a 1px, transparent 1px), linear-gradient(to bottom, #2a2a2a 1px, transparent 1px)",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body antialiased transition-colors duration-300">
+    <!-- Grid Background -->
+    <div class="fixed inset-0 bg-grid-pattern dark:bg-grid-pattern-dark bg-[size:4rem_4rem] pointer-events-none opacity-40 z-0"></div>
+    <div class="fixed top-20 left-[15%] w-10 h-10 bg-primary/20 blur-sm dark:bg-primary/10 z-0"></div>
+    <div class="fixed top-40 right-[35%] w-8 h-8 bg-primary/15 blur-sm dark:bg-primary/10 z-0"></div>
+
+    <!-- Navigation -->
+    <nav class="relative z-50 w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex justify-between items-center">
+        <a href="fitness.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <i class="bx bxs-globe text-text-main-light dark:text-text-main-dark text-2xl sm:text-3xl"></i>
+            <span class="font-display font-bold text-lg sm:text-xl text-text-main-light dark:text-text-main-dark">Corporalis</span>
+        </a>
+        <div class="flex items-center gap-2 sm:gap-3">
+            <a href="fitness.html" class="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark" title="Back to Home">
+                <i class="bx bx-home text-2xl"></i>
+            </a>
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark">
+                <i class="bx bx-moon text-2xl"></i>
+            </button>
+            <a href="login.html" class="bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base rounded-full transition-transform active:scale-95 shadow-lg shadow-primary/20">
+                Log in
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+        <!-- Header -->
+        <div class="mb-12 sm:mb-16 text-center">
+            <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-text-main-light dark:text-text-main-dark mb-4 animate-fade-in-up">
+                Get in <span class="text-primary">Touch</span>
+            </h1>
+            <p class="text-text-muted-light dark:text-text-muted-dark text-sm sm:text-base max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 100ms;">
+                Have questions or feedback? We'd love to hear from you. Reach out to our team and we'll get back to you as soon as possible.
+            </p>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 mb-12">
+            <!-- Contact Methods -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Phone -->
+                <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up" style="animation-delay: 100ms;">
+                    <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="bx bx-phone text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">Phone</h3>
+                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm mb-3">Call us during business hours</p>
+                    <a href="tel:+15551234567" class="text-primary font-semibold hover:opacity-80 transition-opacity">
+                        +1 (555) 123-4567
+                    </a>
+                </div>
+
+                <!-- Email -->
+                <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up" style="animation-delay: 200ms;">
+                    <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="bx bx-envelope text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">Email</h3>
+                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm mb-3">Send us an email anytime</p>
+                    <a href="mailto:support@corporalis.com" class="text-primary font-semibold hover:opacity-80 transition-opacity break-all">
+                        support@corporalis.com
+                    </a>
+                </div>
+
+                <!-- Location -->
+                <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up" style="animation-delay: 300ms;">
+                    <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="bx bx-map text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-text-main-light dark:text-text-main-dark mb-2">Location</h3>
+                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                        123 Fitness Street<br>
+                        Wellness City, WC 12345<br>
+                        United States
+                    </p>
+                </div>
+
+                <!-- Hours -->
+                <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up" style="animation-delay: 400ms;">
+                    <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                        <i class="bx bx-time-five text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-text-main-light dark:text-text-main-dark mb-3">Hours</h3>
+                    <ul class="text-text-muted-light dark:text-text-muted-dark text-sm space-y-1">
+                        <li><strong>Mon - Fri:</strong> 8:00 AM - 6:00 PM</li>
+                        <li><strong>Sat:</strong> 9:00 AM - 4:00 PM</li>
+                        <li><strong>Sun:</strong> Closed</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="lg:col-span-2">
+                <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-8 sm:p-10 shadow-lg animate-fade-in-up" style="animation-delay: 200ms;">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-text-main-light dark:text-text-main-dark mb-6">Send us a Message</h2>
+                    <form id="contactForm" class="space-y-6">
+                        <!-- Name -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main-light dark:text-text-main-dark mb-2">
+                                Full Name
+                            </label>
+                            <input type="text" name="name" required class="w-full bg-background-light dark:bg-background-dark border-2 border-gray-200 dark:border-gray-700 rounded-lg px-4 py-3 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary transition-colors" placeholder="Your name">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main-light dark:text-text-main-dark mb-2">
+                                Email Address
+                            </label>
+                            <input type="email" name="email" required class="w-full bg-background-light dark:bg-background-dark border-2 border-gray-200 dark:border-gray-700 rounded-lg px-4 py-3 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary transition-colors" placeholder="your@email.com">
+                        </div>
+
+                        <!-- Phone (Optional) -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main-light dark:text-text-main-dark mb-2">
+                                Phone Number (Optional)
+                            </label>
+                            <input type="tel" name="phone" class="w-full bg-background-light dark:bg-background-dark border-2 border-gray-200 dark:border-gray-700 rounded-lg px-4 py-3 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary transition-colors" placeholder="+1 (555) 123-4567">
+                        </div>
+
+                        <!-- Subject -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main-light dark:text-text-main-dark mb-2">
+                                Subject
+                            </label>
+                            <select name="subject" required class="w-full bg-background-light dark:bg-background-dark border-2 border-gray-200 dark:border-gray-700 rounded-lg px-4 py-3 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary transition-colors">
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="booking">Booking Question</option>
+                                <option value="technical">Technical Issue</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="partnership">Partnership Opportunity</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Message -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-main-light dark:text-text-main-dark mb-2">
+                                Message
+                            </label>
+                            <textarea name="message" required rows="6" class="w-full bg-background-light dark:bg-background-dark border-2 border-gray-200 dark:border-gray-700 rounded-lg px-4 py-3 text-text-main-light dark:text-text-main-dark focus:outline-none focus:border-primary transition-colors resize-none" placeholder="Tell us more about your inquiry..."></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full bg-gradient-to-r from-primary to-green-500 hover:from-primary/90 hover:to-green-500/90 text-white dark:text-black font-bold py-3 px-6 rounded-lg transition-all transform hover:shadow-lg active:scale-95 flex items-center justify-center gap-2">
+                            <i class="bx bx-send text-lg"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <section class="mt-16 sm:mt-20">
+            <h2 class="text-2xl sm:text-3xl font-bold text-text-main-light dark:text-text-main-dark mb-8 text-center animate-fade-in-up">
+                Frequently Asked <span class="text-primary">Questions</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                <!-- FAQ 1 -->
+                <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up" style="animation-delay: 100ms;">
+                    <h3 class="text-lg font-bold text-text-main-light dark:text-text-main-dark mb-3 flex items-center gap-2">
+                        <i class="bx bx-question-mark text-primary text-2xl"></i>
+                        How do I book a session?
+                    </h3>
+                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                        Visit our Book Session page, select your preferred coach, date, time, and session type. Complete the booking form and you'll receive a confirmation email.
+                    </p>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up" style="animation-delay: 200ms;">
+                    <h3 class="text-lg font-bold text-text-main-light dark:text-text-main-dark mb-3 flex items-center gap-2">
+                        <i class="bx bx-question-mark text-primary text-2xl"></i>
+                        What is your cancellation policy?
+                    </h3>
+                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                        Cancellations made 48 hours in advance receive a full refund. Cancellations within 48 hours are subject to a 50% cancellation fee.
+                    </p>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up" style="animation-delay: 300ms;">
+                    <h3 class="text-lg font-bold text-text-main-light dark:text-text-main-dark mb-3 flex items-center gap-2">
+                        <i class="bx bx-question-mark text-primary text-2xl"></i>
+                        Do you offer refunds?
+                    </h3>
+                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                        Yes, we offer refunds for cancelled sessions following our cancellation policy. For other issues, please contact our support team.
+                    </p>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up" style="animation-delay: 400ms;">
+                    <h3 class="text-lg font-bold text-text-main-light dark:text-text-main-dark mb-3 flex items-center gap-2">
+                        <i class="bx bx-question-mark text-primary text-2xl"></i>
+                        Are sessions online or in-person?
+                    </h3>
+                    <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                        We offer both online and in-person sessions. You can choose your preferred format when booking.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-gray-200 dark:border-gray-800 mt-20 sm:mt-32 py-8 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
+                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                    © 2025 Corporalis. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-6 text-center sm:text-left">
+                <a href="privacy-policy.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Privacy Policy
+                </a>
+                <a href="terms-of-service.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Terms of Service
+                </a>
+                <a href="contact.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Contact
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                document.documentElement.classList.toggle('dark');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('bx-moon');
+                icon.classList.toggle('bx-sun');
+                localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeToggle.querySelector('i').classList.remove('bx-moon');
+                themeToggle.querySelector('i').classList.add('bx-sun');
+            }
+        }
+
+        // Contact Form Handling
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! We will get back to you shortly.');
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html>

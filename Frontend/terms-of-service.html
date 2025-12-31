@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Corporalis</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#39E01E",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#121212",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "text-main-light": "#111111",
+                        "text-main-dark": "#EAEAEA",
+                        "text-muted-light": "#666666",
+                        "text-muted-dark": "#A0A0A0",
+                    },
+                    fontFamily: {
+                        display: ["Syne", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)",
+                        'grid-pattern-dark': "linear-gradient(to right, #2a2a2a 1px, transparent 1px), linear-gradient(to bottom, #2a2a2a 1px, transparent 1px)",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body antialiased transition-colors duration-300">
+    <!-- Grid Background -->
+    <div class="fixed inset-0 bg-grid-pattern dark:bg-grid-pattern-dark bg-[size:4rem_4rem] pointer-events-none opacity-40 z-0"></div>
+    <div class="fixed top-20 left-[15%] w-10 h-10 bg-primary/20 blur-sm dark:bg-primary/10 z-0"></div>
+    <div class="fixed top-40 right-[35%] w-8 h-8 bg-primary/15 blur-sm dark:bg-primary/10 z-0"></div>
+
+    <!-- Navigation -->
+    <nav class="relative z-50 w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex justify-between items-center">
+        <a href="fitness.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <i class="bx bxs-globe text-text-main-light dark:text-text-main-dark text-2xl sm:text-3xl"></i>
+            <span class="font-display font-bold text-lg sm:text-xl text-text-main-light dark:text-text-main-dark">Corporalis</span>
+        </a>
+        <div class="flex items-center gap-2 sm:gap-3">            <a href="fitness.html" class="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark" title="Back to Home">
+                <i class="bx bx-home text-2xl"></i>
+            </a>            <button id="themeToggle" class="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark">
+                <i class="bx bx-moon text-2xl"></i>
+            </button>
+            <a href="login.html" class="bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base rounded-full transition-transform active:scale-95 shadow-lg shadow-primary/20">
+                Log in
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+        <!-- Header -->
+        <div class="mb-12 sm:mb-16 text-center">
+            <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-text-main-light dark:text-text-main-dark mb-4 animate-fade-in-up">
+                Terms of <span class="text-primary">Service</span>
+            </h1>
+            <p class="text-text-muted-light dark:text-text-muted-dark text-sm sm:text-base animate-fade-in-up" style="animation-delay: 100ms;">
+                Last updated: December 27, 2025
+            </p>
+        </div>
+
+        <!-- Content -->
+        <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-8 sm:p-12 shadow-lg space-y-8">
+            <section>
+                <h2 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-4 flex items-center gap-3">
+                    <i class="bx bx-file text-primary text-2xl"></i>
+                    Acceptance of Terms
+                </h2>
+                <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">
+                    By accessing and using the Corporalis website and services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-4 flex items-center gap-3">
+                    <i class="bx bx-user-circle text-primary text-2xl"></i>
+                    User Accounts
+                </h2>
+                <ul class="space-y-3 text-text-muted-light dark:text-text-muted-dark">
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>You are responsible for maintaining the confidentiality of your account password</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>You are responsible for all activities that occur under your account</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>You must notify us immediately of any unauthorized use of your account</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>You certify that you are of legal age to enter into these agreements</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-4 flex items-center gap-3">
+                    <i class="bx bx-dumbbell text-primary text-2xl"></i>
+                    Service Usage
+                </h2>
+                <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed mb-4">
+                    By using our services, you agree to:
+                </p>
+                <ul class="space-y-3 text-text-muted-light dark:text-text-muted-dark">
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>Consult with a physician before starting any fitness program</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>Use the services only for legitimate purposes</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>Not engage in any conduct that restricts or inhibits anyone's use of the services</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>Comply with all applicable laws and regulations</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-4 flex items-center gap-3">
+                    <i class="bx bx-alert-triangle text-primary text-2xl"></i>
+                    Disclaimer of Warranties
+                </h2>
+                <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed mb-4">
+                    Corporalis provides services on an "as is" and "as available" basis. We make no warranties, expressed or implied, regarding the services. All content is provided for informational purposes only and should not be considered medical advice.
+                </p>
+                <div class="bg-primary/10 dark:bg-primary/20 rounded-lg p-4 text-text-main-light dark:text-text-main-dark text-sm">
+                    <i class="bx bx-info-circle text-primary mr-2"></i>
+                    Always consult with a healthcare professional before starting new fitness programs or making significant health decisions.
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-4 flex items-center gap-3">
+                    <i class="bx bx-shield-alt text-primary text-2xl"></i>
+                    Limitation of Liability
+                </h2>
+                <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">
+                    Corporalis will not be liable for any damages, including but not limited to incidental, consequential, special, indirect, or punitive damages, arising out of your use or inability to use the services or content, even if we have been advised of the possibility of such damages.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-4 flex items-center gap-3">
+                    <i class="bx bx-payment text-primary text-2xl"></i>
+                    Pricing and Payments
+                </h2>
+                <ul class="space-y-3 text-text-muted-light dark:text-text-muted-dark">
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>All prices are subject to change without notice</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>Payment must be made in full before session scheduling</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>Refunds are subject to our refund policy</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="text-primary font-bold flex-shrink-0 mt-1">•</span>
+                        <span>We reserve the right to refuse service to anyone</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-4 flex items-center gap-3">
+                    <i class="bx bx-ban text-primary text-2xl"></i>
+                    Termination
+                </h2>
+                <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">
+                    We reserve the right to terminate or suspend your account at any time, for any reason, without notice. Upon termination, all rights and licenses granted to you are immediately revoked.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-4 flex items-center gap-3">
+                    <i class="bx bx-link-external text-primary text-2xl"></i>
+                    Third-Party Links
+                </h2>
+                <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">
+                    Our website may contain links to third-party websites. We are not responsible for the content, accuracy, or practices of external sites. Your use of third-party websites is at your own risk and subject to their terms and conditions.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-4 flex items-center gap-3">
+                    <i class="bx bx-edit text-primary text-2xl"></i>
+                    Modification of Terms
+                </h2>
+                <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">
+                    Corporalis reserves the right to modify these terms at any time. Changes will be effective immediately upon posting to the website. Your continued use of the services constitutes your acceptance of the modified terms.
+                </p>
+            </section>
+
+            <section class="border-t border-gray-300 dark:border-gray-600 pt-8">
+                <p class="text-xs text-text-muted-light dark:text-text-muted-dark">
+                    © 2025 Corporalis. All rights reserved. These Terms of Service are subject to change without notice.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-gray-200 dark:border-gray-800 mt-20 sm:mt-32 py-8 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
+                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                    © 2025 Corporalis. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-6 text-center sm:text-left">
+                <a href="privacy-policy.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Privacy Policy
+                </a>
+                <a href="terms-of-service.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Terms of Service
+                </a>
+                <a href="contact.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Contact
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                document.documentElement.classList.toggle('dark');
+                const icon = this.querySelector('i');
+                icon.classList.toggle('bx-moon');
+                icon.classList.toggle('bx-sun');
+                localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeToggle.querySelector('i').classList.remove('bx-moon');
+                themeToggle.querySelector('i').classList.add('bx-sun');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporalis - Checkout</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#39E01E",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#121212",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "text-main-light": "#111111",
+                        "text-main-dark": "#EAEAEA",
+                        "text-muted-light": "#666666",
+                        "text-muted-dark": "#A0A0A0",
+                    },
+                    fontFamily: {
+                        display: ["Syne", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px)",
+                        'grid-pattern-dark': "linear-gradient(to right, #2a2a2a 1px, transparent 1px), linear-gradient(to bottom, #2a2a2a 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+                        'slide-in': 'slide-in 0.8s ease-out forwards',
+                        'scale-in': 'scale-in 0.5s ease-out forwards',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-scale-in {
+            animation: scale-in 0.5s ease-out forwards;
+        }
+        .delay-100 {
+            animation-delay: 100ms;
+        }
+        .delay-200 {
+            animation-delay: 200ms;
+        }
+        .delay-300 {
+            animation-delay: 300ms;
+        }
+        .delay-400 {
+            animation-delay: 400ms;
+        }
+        input, textarea, select {
+            transition: border-color 0.3s ease;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #39E01E !important;
+            box-shadow: 0 0 0 3px rgba(57, 224, 30, 0.1);
+        }
+        .plan-selector {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .plan-selector.active {
+            border-color: #39E01E;
+            background-color: rgba(57, 224, 30, 0.05);
+        }
+        .payment-method {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .payment-method.active {
+            border-color: #39E01E;
+            background-color: rgba(57, 224, 30, 0.05);
+        }
+        .success-modal {
+            animation: scale-in 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body antialiased transition-colors duration-300">
+    <!-- Grid Background -->
+    <div class="fixed inset-0 bg-grid-pattern dark:bg-grid-pattern-dark bg-[size:4rem_4rem] pointer-events-none opacity-40 z-0"></div>
+    <div class="fixed top-20 left-[15%] w-10 h-10 bg-primary/20 blur-sm dark:bg-primary/10 z-0"></div>
+    <div class="fixed top-40 right-[35%] w-8 h-8 bg-primary/15 blur-sm dark:bg-primary/10 z-0"></div>
+    <div class="fixed bottom-32 left-[40%] w-16 h-16 bg-primary/10 blur-xl rounded-full z-0"></div>
+
+    <!-- Navigation -->
+    <nav class="relative z-50 w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex justify-between items-center">
+        <a href="fitness.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <i class="bx bxs-globe text-text-main-light dark:text-text-main-dark text-2xl sm:text-3xl"></i>
+            <span class="font-display font-bold text-lg sm:text-xl text-text-main-light dark:text-text-main-dark">Corporalis</span>
+        </a>
+        <div class="flex items-center gap-2 sm:gap-3">
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark" title="Toggle dark mode">
+                <i class="bx bx-moon text-2xl"></i>
+            </button>
+            <a href="login.html" class="bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base rounded-full transition-transform active:scale-95 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/40">
+                Log in
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
+        <!-- Header -->
+        <section class="mb-12 text-center">
+            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-text-main-light dark:text-text-main-dark mb-4 animate-fade-in-up">
+                Complete Your <span class="text-primary">Purchase</span>
+            </h1>
+            <p class="text-text-muted-light dark:text-text-muted-dark text-sm sm:text-base max-w-2xl mx-auto animate-fade-in-up delay-100">
+                Secure checkout - your payment information is encrypted and safe
+            </p>
+        </section>
+
+        <!-- Checkout Container -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 mb-16">
+            <!-- Checkout Form -->
+            <div class="lg:col-span-2">
+                <form id="checkoutForm" class="space-y-8">
+                    <!-- Plan Selection -->
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up">
+                        <h2 class="font-display text-2xl sm:text-3xl font-bold text-text-main-light dark:text-text-main-dark mb-6 flex items-center gap-3">
+                            <i class="bx bx-package text-primary text-3xl"></i>
+                            Select Plan
+                        </h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <label class="plan-selector active border-2 border-primary rounded-lg p-4 flex items-start gap-4 bg-primary/5">
+                                <input type="radio" name="plan" value="basic" class="mt-1 w-4 h-4 text-primary cursor-pointer">
+                                <div class="flex-1">
+                                    <p class="font-bold text-text-main-light dark:text-text-main-dark">Basic Plan</p>
+                                    <p class="text-primary font-bold text-lg">$29<span class="text-sm text-text-muted-light dark:text-text-muted-dark">/month</span></p>
+                                </div>
+                            </label>
+                            <label class="plan-selector border-2 border-gray-300 dark:border-gray-700 rounded-lg p-4 flex items-start gap-4 hover:border-primary transition-colors">
+                                <input type="radio" name="plan" value="professional" class="mt-1 w-4 h-4 text-primary cursor-pointer">
+                                <div class="flex-1">
+                                    <p class="font-bold text-text-main-light dark:text-text-main-dark">Professional</p>
+                                    <p class="text-primary font-bold text-lg">$59<span class="text-sm text-text-muted-light dark:text-text-muted-dark">/month</span></p>
+                                </div>
+                            </label>
+                            <label class="plan-selector border-2 border-gray-300 dark:border-gray-700 rounded-lg p-4 flex items-start gap-4 hover:border-primary transition-colors">
+                                <input type="radio" name="plan" value="premium" class="mt-1 w-4 h-4 text-primary cursor-pointer">
+                                <div class="flex-1">
+                                    <p class="font-bold text-text-main-light dark:text-text-main-dark">Premium</p>
+                                    <p class="text-primary font-bold text-lg">$99<span class="text-sm text-text-muted-light dark:text-text-muted-dark">/month</span></p>
+                                </div>
+                            </label>
+                            <label class="plan-selector border-2 border-gray-300 dark:border-gray-700 rounded-lg p-4 flex items-start gap-4 hover:border-primary transition-colors">
+                                <input type="radio" name="plan" value="elite" class="mt-1 w-4 h-4 text-primary cursor-pointer">
+                                <div class="flex-1">
+                                    <p class="font-bold text-text-main-light dark:text-text-main-dark">Elite</p>
+                                    <p class="text-primary font-bold text-lg">$199<span class="text-sm text-text-muted-light dark:text-text-muted-dark">/month</span></p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Billing Information -->
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up delay-100">
+                        <h2 class="font-display text-2xl sm:text-3xl font-bold text-text-main-light dark:text-text-main-dark mb-6 flex items-center gap-3">
+                            <i class="bx bx-user text-primary text-3xl"></i>
+                            Billing Information
+                        </h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Full Name</label>
+                                <input type="text" name="fullName" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark">
+                            </div>
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Email Address</label>
+                                <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark">
+                            </div>
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Phone Number</label>
+                                <input type="tel" name="phone" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark">
+                            </div>
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Street Address</label>
+                                <input type="text" name="address" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">City</label>
+                                    <input type="text" name="city" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark">
+                                </div>
+                                <div>
+                                    <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">State/Province</label>
+                                    <input type="text" name="state" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Zip/Postal Code</label>
+                                    <input type="text" name="zip" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark">
+                                </div>
+                                <div>
+                                    <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Country</label>
+                                    <input type="text" name="country" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Information -->
+                    <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg animate-fade-in-up delay-200">
+                        <h2 class="font-display text-2xl sm:text-3xl font-bold text-text-main-light dark:text-text-main-dark mb-6 flex items-center gap-3">
+                            <i class="bx bx-credit-card text-primary text-3xl"></i>
+                            Payment Method
+                        </h2>
+                        
+                        <!-- Payment Method Selection -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                            <label class="payment-method active border-2 border-primary rounded-lg p-4 flex items-center gap-3 bg-primary/5 cursor-pointer">
+                                <input type="radio" name="paymentMethod" value="card" class="w-4 h-4 text-primary cursor-pointer" checked>
+                                <i class="bx bx-credit-card text-primary text-2xl"></i>
+                                <span class="font-semibold text-text-main-light dark:text-text-main-dark">Credit/Debit Card</span>
+                            </label>
+                            <label class="payment-method border-2 border-gray-300 dark:border-gray-700 rounded-lg p-4 flex items-center gap-3 hover:border-primary transition-colors cursor-pointer">
+                                <input type="radio" name="paymentMethod" value="paypal" class="w-4 h-4 text-primary cursor-pointer">
+                                <i class="fab fa-paypal text-primary text-2xl"></i>
+                                <span class="font-semibold text-text-main-light dark:text-text-main-dark">PayPal</span>
+                            </label>
+                            <label class="payment-method border-2 border-gray-300 dark:border-gray-700 rounded-lg p-4 flex items-center gap-3 hover:border-primary transition-colors cursor-pointer">
+                                <input type="radio" name="paymentMethod" value="crypto" class="w-4 h-4 text-primary cursor-pointer">
+                                <i class="bx bx-bitcoin text-primary text-2xl"></i>
+                                <span class="font-semibold text-text-main-light dark:text-text-main-dark">Crypto</span>
+                            </label>
+                        </div>
+
+                        <!-- Card Information -->
+                        <div id="cardInfo" class="space-y-4">
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Cardholder Name</label>
+                                <input type="text" name="cardName" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Card Number</label>
+                                <input type="text" name="cardNumber" required maxlength="19" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark" placeholder="4532 1234 5678 9010">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Expiry Date</label>
+                                    <input type="text" name="expiry" required maxlength="5" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark" placeholder="MM/YY">
+                                </div>
+                                <div>
+                                    <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">CVV</label>
+                                    <input type="text" name="cvv" required maxlength="4" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PayPal Info -->
+                        <div id="paypalInfo" class="hidden">
+                            <div class="bg-primary/10 border-2 border-primary rounded-lg p-6 text-center">
+                                <i class="fab fa-paypal text-primary text-4xl mb-3 block"></i>
+                                <p class="text-text-main-light dark:text-text-main-dark font-semibold">You will be redirected to PayPal to complete your payment securely.</p>
+                            </div>
+                        </div>
+
+                        <!-- Crypto Info -->
+                        <div id="cryptoInfo" class="hidden space-y-4">
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Select Cryptocurrency</label>
+                                <select name="cryptoType" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark">
+                                    <option value="bitcoin">Bitcoin (BTC)</option>
+                                    <option value="ethereum">Ethereum (ETH)</option>
+                                    <option value="usdc">USD Coin (USDC)</option>
+                                    <option value="usdt">Tether (USDT)</option>
+                                    <option value="solana">Solana (SOL)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-text-main-light dark:text-text-main-dark font-semibold mb-2">Your Wallet Address</label>
+                                <input type="text" name="walletAddress" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark" placeholder="0x742d35Cc6634C0532925a3b844Bc9e7595f...">
+                            </div>
+                            <div class="bg-primary/10 border-2 border-primary rounded-lg p-6">
+                                <div class="flex gap-3 mb-4">
+                                    <i class="bx bx-bitcoin text-primary text-4xl flex-shrink-0"></i>
+                                    <div>
+                                        <p class="text-text-main-light dark:text-text-main-dark font-bold mb-2">Crypto Payment Instructions</p>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm mb-3">Send exactly <span class="font-bold text-primary" id="cryptoAmount">0.00</span> <span class="font-bold text-primary" id="cryptoSymbol">BTC</span> to the address below:</p>
+                                        <div class="bg-background-light dark:bg-background-dark p-3 rounded font-mono text-xs text-text-main-light dark:text-text-main-dark break-all">
+                                            3J98t1WpEZ73CNmYviecrnyiWrnqRhWNLy
+                                        </div>
+                                        <p class="text-text-muted-light dark:text-text-muted-dark text-xs mt-3">Your subscription will be activated once the transaction is confirmed on the blockchain (typically within 10-30 minutes).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms Checkbox -->
+                    <div class="flex items-start gap-3 animate-fade-in-up delay-300">
+                        <input type="checkbox" id="terms" name="terms" required class="mt-1 w-5 h-5 text-primary cursor-pointer">
+                        <label for="terms" class="text-text-main-light dark:text-text-main-dark text-sm cursor-pointer">
+                            I agree to the <a href="terms-of-service.html" class="text-primary font-semibold hover:underline">Terms of Service</a> and <a href="privacy-policy.html" class="text-primary font-semibold hover:underline">Privacy Policy</a>
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 sm:p-8 shadow-lg sticky top-24 animate-fade-in-up delay-200">
+                    <h2 class="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-6 flex items-center gap-3">
+                        <i class="bx bx-receipt text-primary text-3xl"></i>
+                        Order Summary
+                    </h2>
+
+                    <!-- Plan Details -->
+                    <div class="mb-8 pb-8 border-b border-gray-200 dark:border-gray-800">
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-text-main-light dark:text-text-main-dark font-semibold capitalize" id="summaryPlan">Basic Plan</span>
+                            <span class="text-primary font-bold text-xl" id="summaryPrice">$29</span>
+                        </div>
+                        <p class="text-text-muted-light dark:text-text-muted-dark text-sm mb-4">Billed monthly. Cancel anytime.</p>
+                        <div class="bg-primary/10 rounded-lg p-4">
+                            <p class="text-text-main-light dark:text-text-main-dark text-sm">
+                                <i class="bx bx-check-circle text-primary mr-2"></i>
+                                7-day free trial included
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Pricing Breakdown -->
+                    <div class="space-y-3 mb-8 pb-8 border-b border-gray-200 dark:border-gray-800">
+                        <div class="flex justify-between text-text-main-light dark:text-text-main-dark">
+                            <span>Subtotal</span>
+                            <span id="subtotal">$29.00</span>
+                        </div>
+                        <div class="flex justify-between text-text-main-light dark:text-text-main-dark">
+                            <span>Tax (estimated)</span>
+                            <span id="tax">$2.32</span>
+                        </div>
+                    </div>
+
+                    <!-- Total -->
+                    <div class="flex justify-between items-center mb-8 pb-8 border-b border-gray-200 dark:border-gray-800">
+                        <span class="font-display text-xl font-bold text-text-main-light dark:text-text-main-dark">Total</span>
+                        <span class="font-display text-3xl font-bold text-primary" id="total">$31.32</span>
+                    </div>
+
+                    <!-- Security Badge -->
+                    <div class="bg-primary/10 rounded-lg p-4 mb-8 text-center">
+                        <div class="flex items-center justify-center gap-2 mb-2">
+                            <i class="bx bx-lock text-primary text-xl"></i>
+                            <span class="font-semibold text-text-main-light dark:text-text-main-dark text-sm">Secure Payment</span>
+                        </div>
+                        <p class="text-text-muted-light dark:text-text-muted-dark text-xs">Your payment is encrypted and secure</p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" form="checkoutForm" class="w-full bg-primary hover:bg-opacity-90 text-white dark:text-black font-bold py-4 rounded-lg transition-transform active:scale-95 shadow-lg shadow-primary/30 flex items-center justify-center gap-2 mb-4">
+                        <i class="bx bx-lock text-xl"></i>
+                        Complete Purchase
+                    </button>
+
+                    <!-- Back Link -->
+                    <a href="pricing.html" class="w-full text-center text-primary hover:text-opacity-80 transition-colors font-semibold">
+                        ← Back to Pricing
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50 p-4">
+        <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-8 sm:p-12 text-center max-w-md success-modal">
+            <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="bx bx-check text-primary text-5xl"></i>
+            </div>
+            <h2 class="font-display text-3xl font-bold text-text-main-light dark:text-text-main-dark mb-3">
+                Order Confirmed!
+            </h2>
+            <p class="text-text-muted-light dark:text-text-muted-dark mb-6">
+                Your subscription has been activated successfully. Check your email for confirmation and login details.
+            </p>
+            <div class="bg-primary/10 rounded-lg p-4 mb-8">
+                <p class="text-text-main-light dark:text-text-main-dark font-semibold text-sm">
+                    Your 7-day free trial starts now!
+                </p>
+            </div>
+            <a href="dashboard.html" class="w-full bg-primary hover:bg-opacity-90 text-white dark:text-black font-bold py-3 rounded-lg transition-transform active:scale-95 block mb-3">
+                Go to Dashboard
+            </a>
+            <a href="fitness.html" class="w-full text-primary hover:text-opacity-80 font-semibold transition-colors">
+                Return to Home
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-gray-200 dark:border-gray-800 mt-20 sm:mt-32 py-8 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-6 mb-6">
+                <p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+                    © 2025 Corporalis. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Facebook">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Twitter">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Instagram">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="YouTube">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                    <a href="#" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="LinkedIn">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-6 text-center sm:text-left">
+                <a href="privacy-policy.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Privacy Policy
+                </a>
+                <a href="terms-of-service.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Terms of Service
+                </a>
+                <a href="contact.html" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
+                    Contact
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkoutForm = document.getElementById('checkoutForm');
+            const themeToggle = document.getElementById('themeToggle');
+            const successModal = document.getElementById('successModal');
+            const planRadios = document.querySelectorAll('input[name="plan"]');
+            const paymentMethodRadios = document.querySelectorAll('input[name="paymentMethod"]');
+            const planSelectors = document.querySelectorAll('.plan-selector');
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            const cardNameInput = document.querySelector('input[name="cardName"]');
+            const cardNumberInput = document.querySelector('input[name="cardNumber"]');
+            const expiryInput = document.querySelector('input[name="expiry"]');
+            const cvvInput = document.querySelector('input[name="cvv"]');
+
+            // Theme toggle
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    document.documentElement.classList.toggle('dark');
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('bx-moon');
+                    icon.classList.toggle('bx-sun');
+                    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                });
+
+                // Load theme preference
+                if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                    themeToggle.querySelector('i').classList.remove('bx-moon');
+                    themeToggle.querySelector('i').classList.add('bx-sun');
+                }
+            }
+
+            // Plan pricing data
+            const planPrices = {
+                basic: 29,
+                professional: 59,
+                premium: 99,
+                elite: 199
+            };
+
+            const planNames = {
+                basic: 'Basic Plan',
+                professional: 'Professional Plan',
+                premium: 'Premium Plan',
+                elite: 'Elite Plan'
+            };
+
+            // Update summary when plan changes
+            function updateSummary() {
+                const selectedPlan = document.querySelector('input[name="plan"]:checked').value;
+                const price = planPrices[selectedPlan];
+                const tax = (price * 0.08).toFixed(2);
+                const total = (price + parseFloat(tax)).toFixed(2);
+
+                document.getElementById('summaryPlan').textContent = planNames[selectedPlan];
+                document.getElementById('summaryPrice').textContent = '$' + price;
+                document.getElementById('subtotal').textContent = '$' + price.toFixed(2);
+                document.getElementById('tax').textContent = '$' + tax;
+                document.getElementById('total').textContent = '$' + total;
+
+                // Update crypto amounts
+                updateCryptoAmounts(price + parseFloat(tax));
+            }
+
+            // Update crypto amounts based on selected cryptocurrency
+            function updateCryptoAmounts(totalPrice) {
+                const cryptoRates = {
+                    bitcoin: 45000,
+                    ethereum: 2500,
+                    usdc: 1,
+                    usdt: 1,
+                    solana: 200
+                };
+
+                const cryptoSymbols = {
+                    bitcoin: 'BTC',
+                    ethereum: 'ETH',
+                    usdc: 'USDC',
+                    usdt: 'USDT',
+                    solana: 'SOL'
+                };
+
+                const cryptoType = document.querySelector('select[name="cryptoType"]');
+                if (cryptoType) {
+                    const selectedCrypto = cryptoType.value;
+                    const rate = cryptoRates[selectedCrypto];
+                    const symbol = cryptoSymbols[selectedCrypto];
+                    const cryptoAmount = (totalPrice / rate).toFixed(8);
+
+                    document.getElementById('cryptoAmount').textContent = cryptoAmount;
+                    document.getElementById('cryptoSymbol').textContent = symbol;
+                }
+            }
+
+            // Listen to crypto type change
+            const cryptoTypeSelect = document.querySelector('select[name="cryptoType"]');
+            if (cryptoTypeSelect) {
+                cryptoTypeSelect.addEventListener('change', function() {
+                    const total = document.getElementById('total').textContent.replace('$', '');
+                    updateCryptoAmounts(parseFloat(total));
+                });
+            }
+
+            // Plan selection
+            planRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    planSelectors.forEach(selector => selector.classList.remove('active', 'bg-primary/5'));
+                    this.closest('label').classList.add('active', 'bg-primary/5');
+                    updateSummary();
+                });
+            });
+
+            // Payment method selection
+            paymentMethodRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const selectedMethod = this.value;
+                    const cardInfo = document.getElementById('cardInfo');
+                    const paypalInfo = document.getElementById('paypalInfo');
+                    const cryptoInfo = document.getElementById('cryptoInfo');
+
+                    paymentMethods.forEach(method => method.classList.remove('active', 'bg-primary/5'));
+                    this.closest('label').classList.add('active', 'bg-primary/5');
+
+                    if (selectedMethod === 'card') {
+                        cardInfo.classList.remove('hidden');
+                        paypalInfo.classList.add('hidden');
+                        cryptoInfo.classList.add('hidden');
+                        cardNameInput.required = true;
+                        cardNumberInput.required = true;
+                        expiryInput.required = true;
+                        cvvInput.required = true;
+                    } else if (selectedMethod === 'paypal') {
+                        cardInfo.classList.add('hidden');
+                        paypalInfo.classList.remove('hidden');
+                        cryptoInfo.classList.add('hidden');
+                        cardNameInput.required = false;
+                        cardNumberInput.required = false;
+                        expiryInput.required = false;
+                        cvvInput.required = false;
+                    } else if (selectedMethod === 'crypto') {
+                        cardInfo.classList.add('hidden');
+                        paypalInfo.classList.add('hidden');
+                        cryptoInfo.classList.remove('hidden');
+                        cardNameInput.required = false;
+                        cardNumberInput.required = false;
+                        expiryInput.required = false;
+                        cvvInput.required = false;
+                    }
+                });
+            });
+
+            // Card number formatting
+            if (cardNumberInput) {
+                cardNumberInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\s/g, '');
+                    let formatted = value.replace(/(\d{4})/g, '$1 ').trim();
+                    e.target.value = formatted;
+                });
+            }
+
+            // Expiry date formatting
+            if (expiryInput) {
+                expiryInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length >= 2) {
+                        value = value.slice(0, 2) + '/' + value.slice(2, 4);
+                    }
+                    e.target.value = value;
+                });
+            }
+
+            // CVV input (numbers only)
+            if (cvvInput) {
+                cvvInput.addEventListener('input', function(e) {
+                    e.target.value = e.target.value.replace(/\D/g, '');
+                });
+            }
+
+            // Form submission
+            if (checkoutForm) {
+                checkoutForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+                    // Basic validation
+                    if (!this.checkValidity()) {
+                        alert('Please fill in all required fields correctly.');
+                        return;
+                    }
+
+                    // Show success modal
+                    successModal.classList.remove('hidden');
+
+                    // Reset form
+                    setTimeout(() => {
+                        this.reset();
+                        updateSummary();
+                        document.querySelector('input[name="plan"]').click();
+                    }, 2000);
+                });
+            }
+
+            // Initialize summary
+            updateSummary();
+        });
+    </script>
+</body>
+</html>
