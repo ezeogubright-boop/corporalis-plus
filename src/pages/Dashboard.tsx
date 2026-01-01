@@ -500,39 +500,6 @@ export const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-gray-200 dark:border-gray-800 py-8 bg-surface-light dark:bg-surface-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-4">
-            <p className="text-text-muted-light dark:text-text-muted-dark text-sm">
-              © 2025 Corporalis. All rights reserved.
-            </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Facebook">
-                <i className="fab fa-facebook text-xl"></i>
-              </a>
-              <a href="#" className="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Twitter">
-                <i className="fab fa-twitter text-xl"></i>
-              </a>
-              <a href="#" className="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors" title="Instagram">
-                <i className="fab fa-instagram text-xl"></i>
-              </a>
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row justify-center gap-6 text-center sm:text-left">
-            <a href="/privacy-policy" className="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
-              Privacy Policy
-            </a>
-            <a href="/terms-of-service" className="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
-              Terms of Service
-            </a>
-            <a href="/contact" className="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors text-sm">
-              Contact
-            </a>
-          </div>
-        </div>
-      </footer>
-
       {/* Logout Confirmation Modal */}
       {showLogoutModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
