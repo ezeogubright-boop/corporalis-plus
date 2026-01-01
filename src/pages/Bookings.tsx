@@ -160,290 +160,292 @@ export const Bookings: React.FC = () => {
         color: isDark ? '#ffffff' : '#000000'
       }}></div>
 
-      <div className="relative z-10 flex h-screen overflow-hidden">
-        {/* Sidebar - Desktop */}
-        <div className="hidden lg:flex flex-col w-64 bg-surface-light dark:bg-surface-dark border-r border-gray-200 dark:border-gray-800">
+      <div className="flex min-h-screen">
+        {/* Sidebar */}
+        <aside className="hidden lg:flex lg:w-64 bg-surface-light dark:bg-surface-dark border-r border-gray-200 dark:border-gray-800 flex-col fixed h-screen z-40">
           <div className="p-6 border-b border-gray-200 dark:border-gray-800">
-            <h1 className="text-2xl font-display font-bold text-primary">Corporalis</h1>
+            <a href="/dashboard" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <i className="bx bxs-globe text-text-main-light dark:text-text-main-dark text-2xl"></i>
+              <span className="font-display font-bold text-lg text-text-main-light dark:text-text-main-dark">Corporalis</span>
+            </a>
           </div>
-          <nav className="flex-1 overflow-y-auto p-4">
-            <div className="space-y-2">
-              {[
-                { icon: 'bx bx-layout', label: 'Dashboard', path: '/dashboard' },
-                { icon: 'bx bx-calendar', label: 'Bookings', path: '/bookings', active: true },
-                { icon: 'bx bx-list-ul', label: 'My Programs', path: '/my-programs' },
-                { icon: 'bx bx-trending-up', label: 'Progress', path: '/progress' },
-                { icon: 'bx bx-message', label: 'Messages', path: '/messages' },
-                { icon: 'bx bx-target-lock', label: 'Goals', path: '/goals' },
-                { icon: 'bx bx-cog', label: 'Settings', path: '/settings' }
-              ].map((item) => (
-                <a
-                  key={item.path}
-                  href={item.path}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    item.active
-                      ? 'bg-primary/20 text-primary font-semibold'
-                      : 'text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800'
-                  }`}
-                >
-                  <i className={`${item.icon} text-xl`}></i>
-                  <span>{item.label}</span>
-                </a>
-              ))}
-            </div>
+
+          <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <a href="/dashboard" className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+              <i className="bx bx-home text-2xl"></i>
+              <span>Dashboard</span>
+            </a>
+            <a href="/my-programs" className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+              <i className="bx bx-dumbbell text-2xl"></i>
+              <span>My Programs</span>
+            </a>
+            <a href="/progress" className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+              <i className="bx bx-bar-chart-alt-2 text-2xl"></i>
+              <span>Progress</span>
+            </a>
+            <a href="/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-medium transition-all" style={{backgroundColor: 'rgba(57, 224, 30, 0.1)', borderLeft: '3px solid #39E01E', paddingLeft: 'calc(1rem - 3px)'}}>
+              <i className="bx bx-calendar text-2xl"></i>
+              <span>Bookings</span>
+            </a>
+            <a href="/goals" className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+              <i className="bx bx-heart text-2xl"></i>
+              <span>Goals</span>
+            </a>
+            <a href="/messages" className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+              <i className="bx bx-message-rounded text-2xl"></i>
+              <span>Messages</span>
+            </a>
+            <a href="/settings" className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10 transition-all">
+              <i className="bx bx-cog text-2xl"></i>
+              <span>Settings</span>
+            </a>
           </nav>
+
           <div className="p-4 border-t border-gray-200 dark:border-gray-800">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-500/20 rounded-lg transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-red-500/10 hover:text-red-500 transition-all"
             >
-              <i className="bx bx-log-out text-xl"></i>
+              <i className="bx bx-log-out text-2xl"></i>
               <span>Logout</span>
             </button>
           </div>
-        </div>
+        </aside>
 
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Mobile Top Bar & Main Content */}
+        <div className="w-full lg:ml-64 flex flex-col min-h-screen">
           {/* Top Navigation */}
-          <div className="bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 lg:hidden">
+          <nav className="relative z-30 bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 sticky top-0">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+              <div className="flex items-center gap-3">
                 <button
                   onClick={toggleMobileSidebar}
-                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+                  className="lg:hidden p-2 hover:bg-primary/10 rounded-lg transition-colors"
                 >
                   <i className="bx bx-menu text-2xl text-text-main-light dark:text-text-main-dark"></i>
                 </button>
-                <h2 className="text-xl font-display font-bold text-text-main-light dark:text-text-main-dark">Bookings</h2>
-              </div>
-              <div className="hidden lg:block">
-                <h2 className="text-xl font-display font-bold text-text-main-light dark:text-text-main-dark">Bookings</h2>
+                <h1 className="font-display font-bold text-2xl text-text-main-light dark:text-text-main-dark">Bookings</h1>
               </div>
               <div className="flex items-center gap-4">
                 <button
                   onClick={toggleTheme}
-                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                  className="p-2 rounded-full hover:bg-primary/10 transition-colors text-text-main-light dark:text-text-main-dark"
                 >
-                  <i className={`bx ${isDark ? 'bx-sun' : 'bx-moon'} text-xl text-text-main-light dark:text-text-main-dark`}></i>
+                  <i className={`bx ${isDark ? 'bx-sun' : 'bx-moon'} text-2xl`}></i>
                 </button>
-                <button className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
-                  <i className="bx bx-user text-primary text-lg"></i>
-                </button>
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center cursor-pointer hover:bg-primary/30 transition-colors">
+                  <i className="bx bx-user text-primary text-xl"></i>
+                </div>
               </div>
             </div>
-          </div>
+          </nav>
 
           {/* Mobile Sidebar */}
           {sidebarOpen && (
-            <div className="lg:hidden absolute left-0 top-16 w-64 bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 z-50 max-h-[calc(100vh-64px)] overflow-y-auto">
-              <nav className="p-4 space-y-2">
-                {[
-                  { icon: 'bx bx-layout', label: 'Dashboard', path: '/dashboard' },
-                  { icon: 'bx bx-calendar', label: 'Bookings', path: '/bookings', active: true },
-                  { icon: 'bx bx-list-ul', label: 'My Programs', path: '/my-programs' },
-                  { icon: 'bx bx-trending-up', label: 'Progress', path: '/progress' },
-                  { icon: 'bx bx-message', label: 'Messages', path: '/messages' },
-                  { icon: 'bx bx-target-lock', label: 'Goals', path: '/goals' },
-                  { icon: 'bx bx-cog', label: 'Settings', path: '/settings' }
-                ].map((item) => (
-                  <a
-                    key={item.path}
-                    href={item.path}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                      item.active
-                        ? 'bg-primary/20 text-primary font-semibold'
-                        : 'text-text-muted-light dark:text-text-muted-dark hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
-                  >
-                    <i className={`${item.icon} text-xl`}></i>
-                    <span>{item.label}</span>
-                  </a>
-                ))}
+            <div className="lg:hidden bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800">
+              <nav className="px-4 py-4 space-y-2">
+                <a href="/dashboard" className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                  <i className="bx bx-home text-2xl"></i>
+                  <span>Dashboard</span>
+                </a>
+                <a href="/my-programs" className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                  <i className="bx bx-dumbbell text-2xl"></i>
+                  <span>My Programs</span>
+                </a>
+                <a href="/progress" className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                  <i className="bx bx-bar-chart-alt-2 text-2xl"></i>
+                  <span>Progress</span>
+                </a>
+                <a href="/bookings" className="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary font-medium">
+                  <i className="bx bx-calendar text-2xl"></i>
+                  <span>Bookings</span>
+                </a>
+                <a href="/goals" className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                  <i className="bx bx-heart text-2xl"></i>
+                  <span>Goals</span>
+                </a>
+                <a href="/" className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main-light dark:text-text-main-dark hover:bg-primary/10">
+                  <i className="bx bx-home-alt text-2xl"></i>
+                  <span>Back to Home</span>
+                </a>
               </nav>
-              <div className="p-4 border-t border-gray-200 dark:border-gray-800">
-                <button
-                  onClick={handleLogout}
-                  className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-500/20 rounded-lg transition-colors"
-                >
-                  <i className="bx bx-log-out text-xl"></i>
-                  <span>Logout</span>
-                </button>
-              </div>
             </div>
           )}
 
-          {/* Page Content */}
-          <main className="flex-1 overflow-y-auto">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-              {/* Header Section */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+          {/* Main Content */}
+          <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+            {/* Header */}
+            <section className="mb-8 animate-fade-in-up">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                 <div>
-                  <h1 className="font-display text-3xl sm:text-4xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
+                  <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-text-main-light dark:text-text-main-dark mb-2">
                     Your Bookings
-                  </h1>
+                  </h2>
+                  <p className="text-sm sm:text-base text-text-muted-light dark:text-text-muted-dark">
+                    Manage your scheduled workouts and consultations
+                  </p>
                 </div>
-                <button className="flex items-center justify-center gap-2 bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold px-6 py-3 rounded-lg transition-all">
-                  <i className="bx bx-plus text-lg"></i>
+                <a href="/consultation" className="flex items-center justify-center gap-2 bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all text-sm sm:text-base whitespace-nowrap">
+                  <i className="bx bx-plus text-lg sm:text-xl"></i>
                   <span>Book Consultation</span>
-                </button>
+                </a>
               </div>
 
               {/* Filter Tabs */}
-              <div className="flex gap-3 mb-8 flex-wrap">
+              <div className="flex gap-3 flex-wrap">
                 <button
                   onClick={() => setFilter('All')}
-                  className={`px-5 py-2 rounded-lg font-semibold transition-all text-sm ${
+                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
                     filter === 'All'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark hover:bg-gray-200 dark:hover:bg-gray-700'
+                      ? 'bg-primary text-white dark:text-black'
+                      : 'bg-surface-light dark:bg-surface-dark text-text-main-light dark:text-text-main-dark hover:bg-primary/10'
                   }`}
                 >
                   All ({allCount})
                 </button>
                 <button
                   onClick={() => setFilter('Upcoming')}
-                  className={`px-5 py-2 rounded-lg font-semibold transition-all text-sm ${
+                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
                     filter === 'Upcoming'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark hover:bg-gray-200 dark:hover:bg-gray-700'
+                      ? 'bg-primary text-white dark:text-black'
+                      : 'bg-surface-light dark:bg-surface-dark text-text-main-light dark:text-text-main-dark hover:bg-primary/10'
                   }`}
                 >
                   Upcoming ({upcomingCount})
                 </button>
                 <button
                   onClick={() => setFilter('Completed')}
-                  className={`px-5 py-2 rounded-lg font-semibold transition-all text-sm ${
+                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
                     filter === 'Completed'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-text-main-light dark:text-text-main-dark hover:bg-gray-200 dark:hover:bg-gray-700'
+                      ? 'bg-primary text-white dark:text-black'
+                      : 'bg-surface-light dark:bg-surface-dark text-text-main-light dark:text-text-main-dark hover:bg-primary/10'
                   }`}
                 >
                   Completed ({completedCount})
                 </button>
               </div>
+            </section>
 
-              {/* Upcoming Bookings Section */}
-              {(filter === 'All' || filter === 'Upcoming') && filteredBookings.filter(b => b.actionType === 'upcoming').length > 0 && (
-                <section className="mb-12">
-                  <h3 className="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-6">
-                    Upcoming Bookings
-                  </h3>
-                  <div className="space-y-4">
-                    {filteredBookings.filter(b => b.actionType === 'upcoming').map((booking) => (
-                      <div
-                        key={booking.id}
-                        className="booking-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow"
-                      >
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
-                          <div className="flex gap-4 flex-1">
-                            <div className={`w-12 h-12 ${booking.iconBg} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                              <i className={`${booking.icon} ${booking.iconBg.includes('orange') ? 'text-orange-500' : booking.iconBg.includes('blue') ? 'text-blue-500' : 'text-green-500'} text-2xl`}></i>
-                            </div>
-                            <div className="flex-1">
-                              <h4 className="font-display text-lg font-bold text-text-main-light dark:text-text-main-dark">
-                                {booking.title}
-                              </h4>
-                              <p className="text-text-muted-light dark:text-text-muted-dark text-sm">
-                                {booking.coach}
-                              </p>
-                            </div>
+            {/* Upcoming Bookings */}
+            {(filter === 'All' || filter === 'Upcoming') && (
+              <section className="mb-12">
+                <h3 className="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-6">
+                  Upcoming Bookings
+                </h3>
+                <div className="space-y-4">
+                  {filteredBookings.filter(b => b.actionType === 'upcoming').map((booking) => (
+                    <div
+                      key={booking.id}
+                      className="booking-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow"
+                    >
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                        <div className="flex gap-4 flex-1">
+                          <div className={`w-12 h-12 ${booking.iconBg} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                            <i className={`${booking.icon} ${booking.iconBg.includes('orange') ? 'text-orange-500' : booking.iconBg.includes('blue') ? 'text-blue-500' : 'text-green-500'} text-2xl`}></i>
                           </div>
-                          <span className={`${booking.statusClass} px-4 py-2 rounded-full text-sm font-semibold`}>
-                            {booking.statusLabel}
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                          <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
-                            <i className="bx bx-time text-gray-400 text-lg"></i>
-                            <span className="text-sm">{booking.time}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
-                            <i className="bx bx-map text-gray-400 text-lg"></i>
-                            <span className="text-sm">{booking.location}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
-                            <i className="bx bx-hourglass text-gray-400 text-lg"></i>
-                            <span className="text-sm">{booking.duration}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
-                            <i className="bx bx-badge text-gray-400 text-lg"></i>
-                            <span className="text-sm">{booking.level}</span>
+                          <div className="flex-1">
+                            <h4 className="font-display text-lg font-bold text-text-main-light dark:text-text-main-dark">
+                              {booking.title}
+                            </h4>
+                            <p className="text-text-muted-light dark:text-text-muted-dark text-sm">
+                              with {booking.coach}
+                            </p>
                           </div>
                         </div>
-                        <div className="flex gap-3">
-                          <button className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold py-2 rounded-lg transition-all text-sm">
-                            <i className="bx bx-play text-lg"></i>
-                            <span>Start Workout</span>
-                          </button>
-                          <button className="flex items-center justify-center gap-2 bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 font-semibold px-4 py-2 rounded-lg transition-all">
-                            <i className="bx bx-edit text-lg"></i>
-                          </button>
+                        <span className={`${booking.statusClass} px-4 py-2 rounded-full text-sm font-semibold`}>
+                          {booking.statusLabel}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                        <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
+                          <i className="bx bx-time text-primary text-lg"></i>
+                          <span className="text-sm">{booking.time}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
+                          <i className="bx bx-map text-primary text-lg"></i>
+                          <span className="text-sm">{booking.location}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
+                          <i className="bx bx-hourglass text-primary text-lg"></i>
+                          <span className="text-sm">{booking.duration}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
+                          <i className="bx bx-badge text-primary text-lg"></i>
+                          <span className="text-sm">{booking.level}</span>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </section>
-              )}
-
-              {/* Completed Bookings Section */}
-              {(filter === 'All' || filter === 'Completed') && filteredBookings.filter(b => b.actionType === 'completed').length > 0 && (
-                <section>
-                  <h3 className="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-6">
-                    Completed Bookings
-                  </h3>
-                  <div className="space-y-4">
-                    {filteredBookings.filter(b => b.actionType === 'completed').map((booking) => (
-                      <div
-                        key={booking.id}
-                        className="booking-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg opacity-75 hover:shadow-xl transition-shadow"
-                      >
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
-                          <div className="flex gap-4 flex-1">
-                            <div className={`w-12 h-12 ${booking.iconBg} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                              <i className={`${booking.icon} text-green-500 text-2xl`}></i>
-                            </div>
-                            <div className="flex-1">
-                              <h4 className="font-display text-lg font-bold text-text-main-light dark:text-text-main-dark">
-                                {booking.title}
-                              </h4>
-                              <p className="text-text-muted-light dark:text-text-muted-dark text-sm">
-                                Completed with {booking.coach}
-                              </p>
-                            </div>
-                          </div>
-                          <span className={`${booking.statusClass} px-4 py-2 rounded-full text-sm font-semibold`}>
-                            {booking.statusLabel}
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                          <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
-                            <i className="bx bx-time text-gray-400 text-lg"></i>
-                            <span className="text-sm">{booking.time}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
-                            <i className="bx bx-hourglass text-gray-400 text-lg"></i>
-                            <span className="text-sm">{booking.duration}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
-                            <i className="bx bx-star text-yellow-500 text-lg"></i>
-                            <span className="text-sm">{booking.level}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
-                            <i className="bx bx-check-circle text-green-500 text-lg"></i>
-                            <span className="text-sm">Completed</span>
-                          </div>
-                        </div>
-                        <button className="w-full flex items-center justify-center gap-2 bg-gray-500/20 hover:bg-gray-500/30 text-text-main-light dark:text-text-main-dark font-semibold py-2 rounded-lg transition-all">
-                          <i className="bx bx-redo text-lg"></i>
-                          <span>Book Again</span>
+                      <div className="flex gap-3">
+                        <button className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-opacity-90 text-white dark:text-black font-semibold py-2 rounded-lg transition-all text-sm">
+                          <i className="bx bx-play text-lg"></i>
+                          <span>Start Workout</span>
+                        </button>
+                        <button className="flex items-center justify-center gap-2 bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 font-semibold px-4 py-2 rounded-lg transition-all">
+                          <i className="bx bx-edit text-lg"></i>
                         </button>
                       </div>
-                    ))}
-                  </div>
-                </section>
-              )}
-            </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Completed Bookings */}
+            {(filter === 'All' || filter === 'Completed') && (
+              <section>
+                <h3 className="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-6">
+                  Completed Bookings
+                </h3>
+                <div className="space-y-4">
+                  {filteredBookings.filter(b => b.actionType === 'completed').map((booking) => (
+                    <div
+                      key={booking.id}
+                      className="booking-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg opacity-75 hover:shadow-xl transition-shadow"
+                    >
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                        <div className="flex gap-4 flex-1">
+                          <div className={`w-12 h-12 ${booking.iconBg} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                            <i className={`${booking.icon} text-green-500 text-2xl`}></i>
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-display text-lg font-bold text-text-main-light dark:text-text-main-dark">
+                              {booking.title}
+                            </h4>
+                            <p className="text-text-muted-light dark:text-text-muted-dark text-sm">
+                              Completed with {booking.coach}
+                            </p>
+                          </div>
+                        </div>
+                        <span className={`${booking.statusClass} px-4 py-2 rounded-full text-sm font-semibold`}>
+                          {booking.statusLabel}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                        <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
+                          <i className="bx bx-time text-primary text-lg"></i>
+                          <span className="text-sm">{booking.time}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
+                          <i className="bx bx-hourglass text-primary text-lg"></i>
+                          <span className="text-sm">{booking.duration}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
+                          <i className="bx bx-star text-yellow-500 text-lg"></i>
+                          <span className="text-sm">{booking.level}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-text-muted-light dark:text-text-muted-dark">
+                          <i className="bx bx-check-circle text-green-500 text-lg"></i>
+                          <span className="text-sm">Completed</span>
+                        </div>
+                      </div>
+                      <button className="w-full flex items-center justify-center gap-2 bg-gray-500/20 hover:bg-gray-500/30 text-text-main-light dark:text-text-main-dark font-semibold py-2 rounded-lg transition-all">
+                        <i className="bx bx-redo text-lg"></i>
+                        <span>Book Again</span>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
           </main>
         </div>
       </div>
