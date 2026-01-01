@@ -157,7 +157,9 @@ export const Bookings: React.FC = () => {
       <div className="fixed inset-0 opacity-10 dark:opacity-5 pointer-events-none" style={{
         backgroundImage: 'linear-gradient(90deg, currentColor 1px, transparent 1px), linear-gradient(currentColor 1px, transparent 1px)',
         backgroundSize: '40px 40px',
-        color: isDark ? '#ffffff' : '#000000'
+        color: isDark ? '#ffffff' : '#000000',
+        maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0) 100%)',
+        WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0) 100%)'
       }}></div>
 
       <div className="flex min-h-screen">
