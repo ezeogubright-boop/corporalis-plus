@@ -8,10 +8,32 @@ export default function Login() {
   const [remember, setRemember] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState<boolean | null>(null);
+  const [emailTouched, setEmailTouched] = useState(false);
 
   const validateEmail = (emailValue: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(emailValue);
+    if (!emailValue.trim()) return false;
+    
+    // Enhanced email validation
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(emailValue)) return false;
+    
+    // Additional checks
+    const parts = emailValue.split('@');
+    if (parts.length !== 2) return false;
+    
+    const [localPart, domain] = parts;
+    
+    // Check for consecutive dots
+    if (localPart.includes('..') || domain.includes('..')) return false;
+    
+    // Check if local part starts or ends with a dot
+    if (localPart.startsWith('.') || localPart.endsWith('.')) return false;
+    
+    // Check domain has at least one dot
+    if (!domain.includes('.')) return false;
+    
+    return true;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -42,10 +64,35 @@ export default function Login() {
   };
 
   const handleEmailBlur = () => {
-    if (email && !validateEmail(email)) {
-      setErrors((prev) => ({ ...prev, email: 'Invalid email' }));
+    setEmailTouched(true);
+    if (!email.trim()) {
+      setErrors((prev) => ({ ...prev, email: 'Email address is required' }));
+      setIsEmailValid(false);
+    } else if (!validateEmail(email)) {
+      setErrors((prev) => ({ ...prev, email: 'Please enter a valid email address' }));
+      setIsEmailValid(false);
     } else {
       setErrors((prev) => ({ ...prev, email: undefined }));
+      setIsEmailValid(true);
+    }
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    
+    // Real-time validation when user is typing
+    if (emailTouched) {
+      if (!value.trim()) {
+        setErrors((prev) => ({ ...prev, email: 'Email address is required' }));
+        setIsEmailValid(false);
+      } else if (!validateEmail(value)) {
+        setErrors((prev) => ({ ...prev, email: 'Invalid email format' }));
+        setIsEmailValid(false);
+      } else {
+        setErrors((prev) => ({ ...prev, email: undefined }));
+        setIsEmailValid(true);
+      }
     }
   };
 
@@ -174,15 +221,34 @@ export default function Login() {
                     type="email"
                     placeholder="you@example.com"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleEmailChange}
                     onBlur={handleEmailBlur}
-                    className={`input-field w-full pl-10 pr-4 py-3 bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 rounded-lg text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark focus:border-primary transition-all ${
+                    className={`input-field w-full pl-10 pr-12 py-3 bg-background-light dark:bg-background-dark border border-gray-200 dark:border-gray-700 rounded-lg text-text-main-light dark:text-text-main-dark placeholder-text-muted-light dark:placeholder-text-muted-dark focus:border-primary transition-all ${
                       errors.email ? 'error-input' : ''
-                    }`}
+                    } ${isEmailValid === true ? 'border-green-500 dark:border-green-400' : ''}`}
                   />
+                  {/* Validation Icon */}
+                  {emailTouched && email && (
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                      {isEmailValid ? (
+                        <i className="bx bx-check-circle text-green-500 text-xl"></i>
+                      ) : (
+                        <i className="bx bx-x-circle text-red-500 text-xl"></i>
+                      )}
+                    </div>
+                  )}
                 </div>
                 {errors.email && (
-                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                  <div className="flex items-center gap-1 mt-1 animate-shake">
+                    <i className="bx bx-error-circle text-red-500 text-sm"></i>
+                    <p className="text-red-500 text-xs">{errors.email}</p>
+                  </div>
+                )}
+                {isEmailValid && !errors.email && (
+                  <div className="flex items-center gap-1 mt-1">
+                    <i className="bx bx-check text-green-500 text-sm"></i>
+                    <p className="text-green-500 text-xs">Valid email address</p>
+                  </div>
                 )}
               </div>
 
@@ -212,7 +278,10 @@ export default function Login() {
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+                  <div className="flex items-center gap-1 mt-1 animate-shake">
+                    <i className="bx bx-error-circle text-red-500 text-sm"></i>
+                    <p className="text-red-500 text-xs">{errors.password}</p>
+                  </div>
                 )}
               </div>
 
