@@ -324,16 +324,16 @@ export const Bookings: React.FC = () => {
               </div>
 
               {/* Upcoming Bookings Section */}
-              {(filter === 'All' || filter === 'Upcoming') && upcomingBookings.length > 0 && (
+              {(filter === 'All' || filter === 'Upcoming') && filteredBookings.filter(b => b.actionType === 'upcoming').length > 0 && (
                 <section className="mb-12">
                   <h3 className="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-6">
                     Upcoming Bookings
                   </h3>
                   <div className="space-y-4">
-                    {upcomingBookings.map((booking, idx) => (
+                    {filteredBookings.filter(b => b.actionType === 'upcoming').map((booking) => (
                       <div
                         key={booking.id}
-                        className={`booking-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-${idx * 100} hover:shadow-xl transition-shadow`}
+                        className="booking-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow"
                       >
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                           <div className="flex gap-4 flex-1">
@@ -387,16 +387,16 @@ export const Bookings: React.FC = () => {
               )}
 
               {/* Completed Bookings Section */}
-              {(filter === 'All' || filter === 'Completed') && completedBookings.length > 0 && (
+              {(filter === 'All' || filter === 'Completed') && filteredBookings.filter(b => b.actionType === 'completed').length > 0 && (
                 <section>
                   <h3 className="font-display text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-6">
                     Completed Bookings
                   </h3>
                   <div className="space-y-4">
-                    {completedBookings.map((booking, idx) => (
+                    {filteredBookings.filter(b => b.actionType === 'completed').map((booking) => (
                       <div
                         key={booking.id}
-                        className={`booking-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg animate-fade-in-up delay-${(upcomingBookings.length + idx) * 100} opacity-75 hover:shadow-xl transition-shadow`}
+                        className="booking-card bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-lg opacity-75 hover:shadow-xl transition-shadow"
                       >
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                           <div className="flex gap-4 flex-1">
